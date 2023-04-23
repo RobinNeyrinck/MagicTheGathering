@@ -4,6 +4,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Howest.MagicCards.WebAPI", "Howest.Magic.WebAPI\Howest.MagicCards.WebAPI.csproj", "{B096C2E0-7261-42E9-95BF-9B06764E870C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{42DEF710-10C4-4CFB-A84E-EB41FFB0DEA9} = {42DEF710-10C4-4CFB-A84E-EB41FFB0DEA9}
+		{A0833A07-320D-4124-8410-C0954C9E99D6} = {A0833A07-320D-4124-8410-C0954C9E99D6}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Howest.MagicCards.DAL", "Howest.Magic.DAL\Howest.MagicCards.DAL.csproj", "{A0833A07-320D-4124-8410-C0954C9E99D6}"
 EndProject
@@ -19,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Howest.MagicCards.Shared", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Howest.MagicCards.Web", "Howest.MagicCards.Web\Howest.MagicCards.Web.csproj", "{608AC155-6FF8-427D-9BCF-F73D121CD33A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Howest.MagicCards.MinimalAPI", "Howest.MagicCards.MinimalAPI\Howest.MagicCards.MinimalAPI.csproj", "{9DFA170D-ED39-4F08-AA37-BC5DFC84E298}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Howest.MagicCards.MinimalAPI", "Howest.MagicCards.MinimalAPI\Howest.MagicCards.MinimalAPI.csproj", "{9DFA170D-ED39-4F08-AA37-BC5DFC84E298}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
