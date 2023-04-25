@@ -1,4 +1,6 @@
-﻿namespace Howest.MagicCards.Shared.Filters
+﻿using Microsoft.Extensions.Configuration;
+
+namespace Howest.MagicCards.Shared.Filters
 {
     public class PaginationFilter
     {
