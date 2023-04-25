@@ -21,5 +21,4 @@
 		<Using Include="Howest.MagicCards.DAL.Models" />
 		<Using Include="Howest.MagicCards.DAL.Repositories" />
 	</ItemGroup>
-  
 </Project>

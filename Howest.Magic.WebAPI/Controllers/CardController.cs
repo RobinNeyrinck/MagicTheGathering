@@ -1,11 +1,7 @@
-﻿using System.Text;
-using System.Text.Json;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
+﻿using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
-using Shared.DTO;
 
 namespace Howest.MagicCards.WebAPI.Controllers;
 

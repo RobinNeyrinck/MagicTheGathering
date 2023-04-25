@@ -30,6 +30,10 @@
 		<Using Include="Howest.MagicCards.DAL.Repositories" />
 		<Using Include="Howest.MagicCards.WebAPI.Wrappers" />
 		<Using Include="Howest.MagicCards.Shared.Filters" />
+		<Using Include="Howest.MagicCards.Shared.DTO"/>
+		<Using Include="AutoMapper" />
+		<Using Include="AutoMapper.QueryableExtensions"/>
+		<Using Include="Shared.DTO;"/>
 	</ItemGroup>
 
 </Project>
