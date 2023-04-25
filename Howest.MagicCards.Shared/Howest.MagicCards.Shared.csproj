@@ -15,10 +15,15 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.3.2" />
   </ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\Howest.Magic.DAL\Howest.MagicCards.DAL.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Using Include="Howest.MagicCards.DAL.Models" />
 	</ItemGroup>
 
 </Project>

@@ -19,6 +19,7 @@
     <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="6.0.4" />
     <PackageReference Include="StackExchange.Redis" Version="2.6.104" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.3.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,8 +32,8 @@
 		<Using Include="Howest.MagicCards.WebAPI.Wrappers" />
 		<Using Include="Howest.MagicCards.Shared.Filters" />
 		<Using Include="AutoMapper" />
-		<Using Include="AutoMapper.QueryableExtensions"/>
-		<Using Include="Shared.DTO;"/>
+		<Using Include="AutoMapper.QueryableExtensions" />
+		<Using Include="Shared.DTO;" />
 	</ItemGroup>
 
 </Project>

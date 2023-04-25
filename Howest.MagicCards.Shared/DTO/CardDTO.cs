@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Diagnostics.HealthChecks;
-
-namespace Shared.DTO;
+﻿namespace Shared.DTO;
 
 public record CardDTO
 {
