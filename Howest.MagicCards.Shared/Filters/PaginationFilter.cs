@@ -2,7 +2,7 @@
 {
     public class PaginationFilter
     {
-        const int _maxPageSize = 5;
+        const int _maxPageSize = 20;
 
         private int _pageSize = _maxPageSize;
         private int _pageNumber = 1;
