@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using Howest.MagicCards.Shared.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
@@ -28,10 +29,10 @@ public class CardControllerV1 : ControllerBase
     [ProducesResponseType(typeof(string),500)]
     public async Task<ActionResult<Response<IEnumerable<CardDTO>>>> GetCardsAsync([FromServices] IConfiguration config, [FromQuery] CardFilter filter)
     {
-        if (!filter.ValidFilters)
-        {
-            return BadRequest("Filters are not applicable");
-        }
+        //if (!filter.ValidFilters)
+        //{
+        //    return BadRequest("Filters are not applicable");
+        //}
 
 
         string jsonData = await _cache.GetStringAsync(_key);
@@ -43,8 +44,7 @@ public class CardControllerV1 : ControllerBase
         {
             cachedResult = await _cardRepository.GetCards()
                                     .ProjectTo<CardDTO>(_mapper.ConfigurationProvider)
-                                    .Skip((filter.PageNumber - 1) * filter.PageSize)
-                                    .Take(filter.PageSize)
+                                    .ToPagedList(filter.PageNumber, filter.PageSize)
                                     .ToListAsync();
 
             DistributedCacheEntryOptions cacheOptions = new DistributedCacheEntryOptions()

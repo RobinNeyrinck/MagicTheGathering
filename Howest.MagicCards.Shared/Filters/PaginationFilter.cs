@@ -4,6 +4,7 @@ namespace Howest.MagicCards.Shared.Filters
 {
     public class PaginationFilter
     {
+        // TODO: fix pagination for max size
         const int _maxPageSize = 20;
 
         private int _pageSize = _maxPageSize;

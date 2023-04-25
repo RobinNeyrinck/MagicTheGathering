@@ -21,8 +21,4 @@
 		<ProjectReference Include="..\Howest.Magic.DAL\Howest.MagicCards.DAL.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<Using Include="Shared.DTO" />
-	</ItemGroup>
-
 </Project>
