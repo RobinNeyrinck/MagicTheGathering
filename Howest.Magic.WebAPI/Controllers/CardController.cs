@@ -23,11 +23,17 @@ public class CardControllerV1 : ControllerBase
     }
 
     [HttpGet(Name = "GetCards")]
-    [ProducesResponseType(200)]
-    [ProducesResponseType(404)]
-    [ProducesResponseType(500)]
-    public async Task<ActionResult<Response<IEnumerable<CardDTO>>>> GetCardsAsync([FromServices] IConfiguration config, [FromQuery] PaginationFilter paginationFilter)
+    [ProducesResponseType(typeof(IEnumerable<CardDTO>),200)]
+    [ProducesResponseType(typeof(string),404)]
+    [ProducesResponseType(typeof(string),500)]
+    public async Task<ActionResult<Response<IEnumerable<CardDTO>>>> GetCardsAsync([FromServices] IConfiguration config, [FromQuery] CardFilter filter)
     {
+        if (!filter.ValidFilters)
+        {
+            return BadRequest("Filters are not applicable");
+        }
+
+
         string jsonData = await _cache.GetStringAsync(_key);
         IEnumerable<CardDTO>? cachedResult = (jsonData is not null)
                                             ? JsonSerializer.Deserialize<IEnumerable<CardDTO>>(jsonData)
@@ -37,8 +43,8 @@ public class CardControllerV1 : ControllerBase
         {
             cachedResult = await _cardRepository.GetCards()
                                     .ProjectTo<CardDTO>(_mapper.ConfigurationProvider)
-                                    .Skip((paginationFilter.PageNumber - 1) * paginationFilter.PageSize)
-                                    .Take(paginationFilter.PageSize)
+                                    .Skip((filter.PageNumber - 1) * filter.PageSize)
+                                    .Take(filter.PageSize)
                                     .ToListAsync();
 
             DistributedCacheEntryOptions cacheOptions = new DistributedCacheEntryOptions()
@@ -51,14 +57,14 @@ public class CardControllerV1 : ControllerBase
             await _cache.SetStringAsync(_key, jsonData, cacheOptions);
         }
 
-        paginationFilter.MaxPageSize = int.Parse(config["maxPageSize"]);
+        filter.MaxPageSize = int.Parse(config["maxPageSize"]);
 
         return (cachedResult is IEnumerable<CardDTO> allCards)
             ? Ok(
                 new PagedResponse<IEnumerable<CardDTO>>(
                             cachedResult,
-                            paginationFilter.PageNumber,
-                            paginationFilter.PageSize
+                            filter.PageNumber,
+                            filter.PageSize
                     )
                 {
                     TotalRecords = allCards.Count()
