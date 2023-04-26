@@ -16,5 +16,10 @@
         {
             return _db.Rarities;
         }
+
+        public IQueryable<Set> GetSets()
+        {
+            return _db.Sets;
+        }
     }
 }

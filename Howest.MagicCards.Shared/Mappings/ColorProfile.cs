@@ -1,7 +1,4 @@
-﻿using AutoMapper;
-using Shared.DTO;
-
-namespace Shared.Mappings;
+﻿namespace Shared.Mappings;
 
 public class ColorProfile : Profile
 {

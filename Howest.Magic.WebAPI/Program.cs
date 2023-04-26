@@ -65,6 +65,7 @@ builder.Services.AddAutoMapper(new System.Type[] {
     typeof(CardProfile),
     typeof(ColorProfile),
     typeof(RarityProfile),
+    typeof(SetProfile),
 });
 
 var app = builder.Build();

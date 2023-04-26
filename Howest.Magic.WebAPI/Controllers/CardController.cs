@@ -101,11 +101,11 @@ public class CardControllerV1 : ControllerBase
             return StatusCode(
                 StatusCodes.Status500InternalServerError,
                 new Response<ColorDTO>
-            {
-                Succeeded = false,
-                Errors = new[] { ex.Message },
-                Message = $"Error while retrieving colors"
-            });
+                {
+                    Succeeded = false,
+                    Errors = new[] { ex.Message },
+                    Message = $"Error while retrieving colors"
+                });
         }
     }
 
@@ -122,7 +122,7 @@ public class CardControllerV1 : ControllerBase
                 ? Ok(await allRarities
                                        .ProjectTo<RarityDTO>(_mapper.ConfigurationProvider)
                                                               .ToListAsync())
-                : NotFound(new Response<Rarity>
+                : NotFound(new Response<RarityDTO>
                 {
                     Succeeded = false,
                     Errors = new[] { $"Status code: {StatusCodes.Status404NotFound}" },
@@ -135,9 +135,42 @@ public class CardControllerV1 : ControllerBase
                                StatusCodes.Status500InternalServerError,
                                               new Response<RarityDTO>
                                               {
+                                                  Succeeded = false,
+                                                  Errors = new[] { ex.Message },
+                                                  Message = $"Error while retrieving rarities"
+                                              });
+        }
+    }
+
+    [HttpGet("sets")]
+    [ProducesResponseType(typeof(IEnumerable<SetDTO>), 200)]
+    [ProducesResponseType(typeof(string), 404)]
+    [ProducesResponseType(typeof(string), 500)]
+    [MapToApiVersion("1.1")]
+    public async Task<ActionResult<Response<IEnumerable<SetDTO>>>> GetSets()
+    {
+        try
+        {
+            return (_cardPropertiesRepository.GetSets() is IQueryable<Set> allSets)
+                ? Ok(await allSets
+                        .ProjectTo<SetDTO>(_mapper.ConfigurationProvider)
+                        .ToListAsync())
+                : NotFound(new Response<SetDTO>
+                {
+                    Succeeded = false,
+                    Errors = new[] { $"Status code: {StatusCodes.Status404NotFound}" },
+                    Message = $"No sets found"
+                });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(
+                StatusCodes.Status500InternalServerError,
+            new Response<SetDTO>
+            {
                 Succeeded = false,
                 Errors = new[] { ex.Message },
-                Message = $"Error while retrieving rarities"
+                Message = $"Error while retrieving sets"
             });
         }
     }
