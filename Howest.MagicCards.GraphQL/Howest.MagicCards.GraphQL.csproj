@@ -29,8 +29,10 @@
 		<Using Include="Howest.MagicCards.DAL.Models" />
 		<Using Include="Howest.MagicCards.DAL.Repositories" />
 		<Using Include="Microsoft.EntityFrameworkCore" />
-		<Using Include="GraphQLAPI.GraphQLTypes" />
+		<Using Include="GraphQL.Server"/>
+		<Using Include="GraphQL.Server.Ui.Playground"/>
 		<Using Include="GraphQL" />
+		<Using Include="GraphQL.GraphQLTypes" />
 		<Using Include="GraphQL.Types" />
 	</ItemGroup>
 

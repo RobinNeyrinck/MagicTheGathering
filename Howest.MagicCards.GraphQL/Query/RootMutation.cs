@@ -2,9 +2,10 @@
 {
     public class RootMutation : ObjectGraphType
     {
-        public RootMutation(ICardRepository cardRepository) 
+        public RootMutation(ICardRepository cardRepository, ICardPropertiesRepository cardPropertiesRepository) 
         { 
             // TODO: Add mutation fields
+            
         }
     }
 }
