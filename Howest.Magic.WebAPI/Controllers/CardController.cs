@@ -73,6 +73,39 @@ public class CardControllerV1 : ControllerBase
             });
     }
 
+    [HttpGet("cards/{id}")]
+    [ProducesResponseType(typeof(CardDTO), 200)]
+    [ProducesResponseType(typeof(string), 404)]
+    [ProducesResponseType(typeof(string), 500)]
+    [MapToApiVersion("1.1")]
+    public async Task<ActionResult<Response<CardDTO>>> GetCardByIdAsync(int id)
+    {
+        try
+        {
+            return (_cardRepository.GetCardById(id) is IQueryable<Card> card)
+                ? Ok(await card
+                            .ProjectTo<CardDTO>(_mapper.ConfigurationProvider)
+                            .FirstOrDefaultAsync())
+                : NotFound(new Response<CardDTO>
+                {
+                    Succeeded = false,
+                    Errors = new[] { $"Status code: {StatusCodes.Status404NotFound}" },
+                    Message = $"No card found with id: {id}"
+                });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(
+                               StatusCodes.Status500InternalServerError,
+                                              new Response<CardDTO>
+                                              {
+                                                  Succeeded = false,
+                                                  Errors = new[] { ex.Message },
+                                                  Message = $"Error while retrieving card with id: {id}"
+                                              });
+        }
+    }
+
     #region Card Properties
     [HttpGet("colors")]
     [ProducesResponseType(typeof(IEnumerable<ColorDTO>), 200)]

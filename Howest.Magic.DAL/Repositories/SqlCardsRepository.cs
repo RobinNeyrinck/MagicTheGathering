@@ -16,4 +16,12 @@ public class SqlCardRepository : ICardRepository
                                     .Include(c => c.Artist);
         return cards;
     }
+
+    public IQueryable<Card> GetCardById(int id)
+    {
+        IQueryable<Card> cards = _db.Cards
+                                    .Include(c => c.Artist)
+                                    .Where(c => c.Id == id);
+        return cards;
+    }
 }
