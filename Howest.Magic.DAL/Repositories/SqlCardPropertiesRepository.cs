@@ -11,5 +11,10 @@
         {
             return _db.Colors;
         }
+
+        public IQueryable<Rarity> GetRarities()
+        {
+            return _db.Rarities;
+        }
     }
 }

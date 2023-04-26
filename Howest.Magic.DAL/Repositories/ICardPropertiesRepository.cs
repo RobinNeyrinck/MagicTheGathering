@@ -3,5 +3,6 @@
     public interface ICardPropertiesRepository
     {
         IQueryable<Color> GetColors();
+        IQueryable<Rarity> GetRarities();
     }
 }

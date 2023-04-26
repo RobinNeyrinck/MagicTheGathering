@@ -64,6 +64,7 @@ builder.Services.AddVersionedApiExplorer(
 builder.Services.AddAutoMapper(new System.Type[] {
     typeof(CardProfile),
     typeof(ColorProfile),
+    typeof(RarityProfile),
 });
 
 var app = builder.Build();

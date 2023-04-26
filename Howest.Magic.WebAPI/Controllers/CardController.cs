@@ -75,7 +75,7 @@ public class CardControllerV1 : ControllerBase
             });
     }
 
-
+    #region Card Properties
     [HttpGet("colors")]
     [ProducesResponseType(typeof(IEnumerable<ColorDTO>), 200)]
     [ProducesResponseType(typeof(string), 404)]
@@ -108,6 +108,41 @@ public class CardControllerV1 : ControllerBase
             });
         }
     }
+
+    [HttpGet("rarities")]
+    [ProducesResponseType(typeof(IEnumerable<RarityDTO>), 200)]
+    [ProducesResponseType(typeof(string), 404)]
+    [ProducesResponseType(typeof(string), 500)]
+    [MapToApiVersion("1.1")]
+    public async Task<ActionResult<Response<IEnumerable<RarityDTO>>>> GetRarities()
+    {
+        try
+        {
+            return (_cardPropertiesRepository.GetRarities() is IQueryable<Rarity> allRarities)
+                ? Ok(await allRarities
+                                       .ProjectTo<RarityDTO>(_mapper.ConfigurationProvider)
+                                                              .ToListAsync())
+                : NotFound(new Response<Rarity>
+                {
+                    Succeeded = false,
+                    Errors = new[] { $"Status code: {StatusCodes.Status404NotFound}" },
+                    Message = $"No rarities found"
+                });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(
+                               StatusCodes.Status500InternalServerError,
+                                              new Response<RarityDTO>
+                                              {
+                Succeeded = false,
+                Errors = new[] { ex.Message },
+                Message = $"Error while retrieving rarities"
+            });
+        }
+    }
+
+    #endregion
 
 }
 
