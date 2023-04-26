@@ -2,6 +2,7 @@
 using Howest.MagicCards.Shared.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.Extensions.Caching.Distributed;
 
 namespace Howest.MagicCards.WebAPI.Controllers;
@@ -45,10 +46,7 @@ public class CardControllerV1 : ControllerBase
                                     .ToPagedList(filter.PageNumber, filter.PageSize)
                                     .ToListAsync();
 
-            DistributedCacheEntryOptions cacheOptions = new DistributedCacheEntryOptions()
-            {
-                AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(30)
-            };
+            DistributedCacheEntryOptions cacheOptions = new DistributedCacheEntryOptions();
 
             jsonData = JsonSerializer.Serialize(cachedResult);
 
