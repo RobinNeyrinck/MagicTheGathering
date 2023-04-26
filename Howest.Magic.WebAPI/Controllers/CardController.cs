@@ -30,12 +30,6 @@ public class CardControllerV1 : ControllerBase
     [ProducesResponseType(typeof(string), 500)]
     public async Task<ActionResult<Response<IEnumerable<CardDTO>>>> GetCardsAsync([FromServices] IConfiguration config, [FromQuery] CardFilter filter)
     {
-        //if (!filter.ValidFilters)
-        //{
-        //    return BadRequest("Filters are not applicable");
-        //}
-
-
         string jsonData = await _cache.GetStringAsync(_key);
         IEnumerable<CardDTO>? cachedResult = (jsonData is not null)
                                             ? JsonSerializer.Deserialize<IEnumerable<CardDTO>>(jsonData)
