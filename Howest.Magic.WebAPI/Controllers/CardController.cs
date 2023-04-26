@@ -44,6 +44,7 @@ public class CardControllerV1 : ControllerBase
         if (cachedResult is null)
         {
             cachedResult = await _cardRepository.GetCards()
+                                    .ToFilteredList(filter)
                                     .ProjectTo<CardDTO>(_mapper.ConfigurationProvider)
                                     .ToPagedList(filter.PageNumber, filter.PageSize)
                                     .ToListAsync();
