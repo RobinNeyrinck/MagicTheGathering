@@ -2,7 +2,7 @@
 {
     public class CardFilter : PaginationFilter
     {
-        public bool ValidFilters => validateFilters();
+        public bool ValidFilters => ValidateFilters();
         public string? Query { get; set; }
 
         #region filters
@@ -17,7 +17,7 @@
         public string? Text { get; set; }
         #endregion
 
-        private bool validateFilters()
+        private bool ValidateFilters()
         {
             throw new NotImplementedException();
         }

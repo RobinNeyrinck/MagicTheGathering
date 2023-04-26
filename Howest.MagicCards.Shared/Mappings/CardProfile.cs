@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Howest.MagicCards.DAL.Models;
 using Shared.DTO;
 
 namespace Shared.Mappings;

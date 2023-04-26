@@ -1,5 +1,4 @@
-﻿using System.Collections.Immutable;
-using System.Text.Json;
+﻿using System.Text.Json;
 using Howest.MagicCards.Shared.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -16,18 +15,21 @@ public class CardControllerV1 : ControllerBase
     private readonly ICardRepository _cardRepository;
     private readonly IMapper _mapper;
     private readonly IDistributedCache _cache;
+    private readonly ICardPropertiesRepository _cardPropertiesRepository;
 
-    public CardControllerV1(ICardRepository cardRepository, IMapper mapper, IDistributedCache memoryCache)
+    public CardControllerV1(ICardRepository cardRepository, IMapper mapper, IDistributedCache memoryCache, ICardPropertiesRepository cardPropertiesRepository)
     {
         _cardRepository = cardRepository;
         _mapper = mapper;
         _cache = memoryCache;
+        _cardPropertiesRepository = cardPropertiesRepository;
     }
 
-    [HttpGet(Name = "GetCards")]
+    [HttpGet("cards")]
     [ProducesResponseType(typeof(IEnumerable<CardDTO>), 200)]
     [ProducesResponseType(typeof(string), 404)]
     [ProducesResponseType(typeof(string), 500)]
+    [MapToApiVersion("1.1")]
     public async Task<ActionResult<Response<IEnumerable<CardDTO>>>> GetCardsAsync([FromServices] IConfiguration config, [FromQuery] CardFilter filter)
     {
         string jsonData = await _cache.GetStringAsync(_key);
@@ -72,6 +74,41 @@ public class CardControllerV1 : ControllerBase
                 Message = $"No cards found"
             });
     }
+
+
+    [HttpGet("colors")]
+    [ProducesResponseType(typeof(IEnumerable<ColorDTO>), 200)]
+    [ProducesResponseType(typeof(string), 404)]
+    [ProducesResponseType(typeof(string), 500)]
+    [MapToApiVersion("1.1")]
+    public async Task<ActionResult<Response<IEnumerable<ColorDTO>>>> GetColors()
+    {
+        try
+        {
+            return (_cardPropertiesRepository.GetColors() is IQueryable<Color> allColors)
+                ? Ok(await allColors
+                        .ProjectTo<ColorDTO>(_mapper.ConfigurationProvider)
+                        .ToListAsync())
+                : NotFound(new Response<Color>
+                {
+                    Succeeded = false,
+                    Errors = new[] { $"Status code: {StatusCodes.Status404NotFound}" },
+                    Message = $"No colors found"
+                });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(
+                StatusCodes.Status500InternalServerError,
+                new Response<ColorDTO>
+            {
+                Succeeded = false,
+                Errors = new[] { ex.Message },
+                Message = $"Error while retrieving colors"
+            });
+        }
+    }
+
 }
 
 [ApiVersion("1.5")]
@@ -91,7 +128,7 @@ public class CardControllerV2 : ControllerBase
         _cache = memoryCache;
     }
 
-    [HttpGet(Name = "GetCards")]
+    [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<CardDTO>), 200)]
     [ProducesResponseType(typeof(string), 404)]
     [ProducesResponseType(typeof(string), 500)]
@@ -107,7 +144,7 @@ public class CardControllerV2 : ControllerBase
         if (cachedResult is null)
         {
             cachedResult = await _cardRepository.GetCards()
-                                    .Sort(filter.Query?? string.Empty)
+                                    .Sort(filter.Query ?? string.Empty)
                                     .ProjectTo<CardDTO>(_mapper.ConfigurationProvider)
                                     .ToPagedList(filter.PageNumber, filter.PageSize)
                                     .ToListAsync();
