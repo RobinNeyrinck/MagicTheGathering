@@ -6,6 +6,7 @@ builder.Services.AddDbContext<mtg_v1Context>(options =>
 
 builder.Services.AddScoped<ICardRepository, SqlCardRepository>();
 builder.Services.AddScoped<ICardPropertiesRepository, SqlCardPropertiesRepository>();
+builder.Services.AddScoped<IArtistRepository, SqlArtistRepository>();
 
 builder.Services.AddScoped<RootSchema>();
 builder.Services.AddGraphQL()
@@ -17,9 +18,9 @@ var app = builder.Build();
 
 app.UseGraphQL<RootSchema>();
 app.UseGraphQLPlayground(options: new GraphQLPlaygroundOptions()
-{
-    EditorTheme = EditorTheme.Light
-}
+    {
+        EditorTheme = EditorTheme.Light
+    }
 );
 
 app.Run();

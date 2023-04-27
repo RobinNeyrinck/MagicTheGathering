@@ -2,5 +2,6 @@
 
 public interface IArtistRepository
 {
+    Artist GetArtist(long id);
     Task<Artist> GetArtistAsync(long id);
 }

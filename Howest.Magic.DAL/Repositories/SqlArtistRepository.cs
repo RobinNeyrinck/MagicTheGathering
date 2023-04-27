@@ -13,4 +13,9 @@ public class SqlArtistRepository : IArtistRepository
     {
         return await _db.Artists.FirstOrDefaultAsync(a => a.Id == id);
     }
+
+    public Artist GetArtist(long id)
+    {
+        return _db.Artists.FirstOrDefault(a => a.Id == id);
+    }
 }

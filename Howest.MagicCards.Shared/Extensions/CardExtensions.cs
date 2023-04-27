@@ -2,7 +2,6 @@
 using System.Linq.Dynamic.Core;
 using System.Text;
 using Howest.MagicCards.Shared.Filters;
-using System.Drawing;
 
 namespace Howest.MagicCards.Shared.Extensions;
 
