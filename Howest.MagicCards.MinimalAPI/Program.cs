@@ -1,4 +1,25 @@
-var builder = WebApplication.CreateBuilder(args);
+using Microsoft.Extensions.Options;
+
+const string commonPrefix = "/api";
+
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+string urlPrefix = builder.Configuration["UrlPrefix"] ?? commonPrefix;
+
+#region MongoDB
+builder.Services.Configure<CardDeckDatabaseSettings>(
+    builder.Configuration.GetSection(nameof(CardDeckDatabaseSettings))
+);
+
+builder.Services.AddSingleton<ICardDeckDatabaseSettings>(sp =>
+    sp.GetRequiredService<IOptions<CardDeckDatabaseSettings>>().Value
+);
+
+builder.Services.AddSingleton<IMongoClient, MongoClient>(sp =>
+    new MongoClient(sp.GetRequiredService<ICardDeckDatabaseSettings>().ConnectionString)
+);
+
+builder.Services.AddScoped<ICardDeckService, CardDeckService>();
+#endregion
 
 // Add services to the container.
 builder.Services.AddEndpointsApiExplorer();
@@ -15,6 +36,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapGet("/", () => "Magic The Gathering");
+app.MapEndpoints(urlPrefix);
 
 app.Run();
