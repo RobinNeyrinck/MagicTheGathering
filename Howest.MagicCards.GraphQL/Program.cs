@@ -19,7 +19,7 @@ var app = builder.Build();
 app.UseGraphQL<RootSchema>();
 app.UseGraphQLPlayground(options: new GraphQLPlaygroundOptions()
     {
-        EditorTheme = EditorTheme.Light
+        EditorTheme = EditorTheme.Dark
     }
 );
 

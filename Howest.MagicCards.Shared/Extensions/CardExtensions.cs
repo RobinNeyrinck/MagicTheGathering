@@ -2,6 +2,7 @@
 using System.Linq.Dynamic.Core;
 using System.Text;
 using Howest.MagicCards.Shared.Filters;
+using Howest.MagicCards.DAL.Models;
 
 namespace Howest.MagicCards.Shared.Extensions;
 
@@ -61,6 +62,8 @@ public static class CardExtensions
 
     }
 
+
+    #region Help Functions
     private static void GetFilters(CardFilter filter, out string name, out string type, out string cardSet, out string rarity, out string artist, out ICollection<string> color, out string power, out string manaCost, out string text)
     {
         name = filter.Name;
@@ -73,4 +76,5 @@ public static class CardExtensions
         manaCost = filter.ManaCost;
         text = filter.Text;
     }
+    #endregion
 }

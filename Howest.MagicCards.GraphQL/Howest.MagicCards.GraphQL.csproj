@@ -23,11 +23,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Howest.Magic.DAL\Howest.MagicCards.DAL.csproj" />
+	  <ProjectReference Include="..\Howest.MagicCards.Shared\Howest.MagicCards.Shared.csproj" />
   </ItemGroup>
 
 	<ItemGroup>
 		<Using Include="Howest.MagicCards.DAL.Models" />
 		<Using Include="Howest.MagicCards.DAL.Repositories" />
+		<Using Include="Howest.MagicCards.Shared.Extensions"/>
 		<Using Include="Microsoft.EntityFrameworkCore" />
 		<Using Include="GraphQL.Server" />
 		<Using Include="GraphQL.Server.Ui.Playground" />

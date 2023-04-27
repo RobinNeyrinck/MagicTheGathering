@@ -15,6 +15,7 @@
         public string? Power { get; set; }
         public string? ManaCost { get; set; }
         public string? Text { get; set; }
+        public string? Toughness { get; set; }
         #endregion
 
         private bool ValidateFilters()

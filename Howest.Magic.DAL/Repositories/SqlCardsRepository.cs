@@ -24,4 +24,12 @@ public class SqlCardRepository : ICardRepository
                                     .Where(c => c.Id == id);
         return cards;
     }
+
+    public IQueryable<Card> GetCardsByPowerAndToughness(string power, string toughness)
+    {
+        IQueryable<Card> cards = _db.Cards
+                                    .Include(c => c.Artist)
+                                    .Where(c => c.Power == power && c.Toughness == toughness);
+        return cards;
+    }
 }
