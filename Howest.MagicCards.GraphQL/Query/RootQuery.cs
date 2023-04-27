@@ -39,7 +39,28 @@ public class RootQuery : ObjectGraphType
         Field<ListGraphType<ArtistType>>(
             "artists",
             Description = "Get all artists",
-            resolve: context => artistRepository.GetArtistsAsync()
+            arguments: new QueryArguments(
+                new QueryArgument<IntGraphType> { Name = "limit" }
+            ),
+            resolve: context => 
+            {
+                int limit = context.GetArgument<int>("limit");
+
+                return artistRepository.GetLimitedArtists(limit);
+            }
+        );
+
+        Field<ArtistType>(
+            "artist",
+            Description = "Get an artist by id",
+            arguments: new QueryArguments(
+                new QueryArgument<NonNullGraphType<IntGraphType>> { Name = "id" }
+            ),
+            resolve: context =>
+            {
+                long id = context.GetArgument<long>("id");
+                return artistRepository.GetArtist(id);
+            }
         );
         #endregion
     }
