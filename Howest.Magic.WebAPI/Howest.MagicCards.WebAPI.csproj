@@ -31,6 +31,9 @@
 		<Using Include="Howest.MagicCards.DAL.Repositories" />
 		<Using Include="Howest.MagicCards.WebAPI.Wrappers" />
 		<Using Include="Howest.MagicCards.Shared.Filters" />
+		<Using Include="Howest.MagicCards.Shared.Extensions" />
+		<Using Include="Microsoft.AspNetCore.Mvc" />
+		<Using Include="Microsoft.EntityFrameworkCore"/>
 		<Using Include="AutoMapper" />
 		<Using Include="AutoMapper.QueryableExtensions" />
 		<Using Include="Shared.DTO;" />

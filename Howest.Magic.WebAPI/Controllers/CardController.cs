@@ -1,7 +1,4 @@
 ﻿using System.Text.Json;
-using Howest.MagicCards.Shared.Extensions;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
 
 namespace Howest.MagicCards.WebAPI.Controllers;
@@ -26,6 +23,7 @@ public class CardController : ControllerBase
         _cardPropertiesRepository = cardPropertiesRepository;
     }
 
+    #region v1.1
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<CardDTO>), 200)]
     [ProducesResponseType(typeof(string), 404)]
@@ -206,6 +204,7 @@ public class CardController : ControllerBase
         }
     }
 
+    #endregion
     #endregion
 
     #region v1.5

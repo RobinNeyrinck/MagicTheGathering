@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace Howest.MagicCards.WebAPI.Controllers;
+﻿namespace Howest.MagicCards.WebAPI.Controllers;
 
 [ApiVersion("1.1")]
 [ApiVersion("1.5")]
