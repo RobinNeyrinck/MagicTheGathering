@@ -4,7 +4,7 @@ namespace GraphQL.GraphQLTypes;
 
 public class RootQuery : ObjectGraphType
 {
-    public RootQuery(ICardRepository cardRepository, ICardPropertiesRepository cardPropertiesRepository)
+    public RootQuery(ICardRepository cardRepository, IArtistRepository artistRepository)
     {
         Name = "Query";
         #region Card
@@ -29,10 +29,18 @@ public class RootQuery : ObjectGraphType
 
                               return cardRepository
                                     .GetCards()
-                                        .ToFilteredList(filter);
+                                    .ToFilteredList(filter);
                           }
         );
 
+        #endregion
+
+        #region Artists
+        Field<ListGraphType<ArtistType>>(
+            "artists",
+            Description = "Get all artists",
+            resolve: context => artistRepository.GetArtistsAsync()
+        );
         #endregion
     }
 }

@@ -4,5 +4,6 @@
     {
         IQueryable<Card> GetCardById(int id);
         IQueryable<Card> GetCards();
+        IQueryable<Card> GetCardsByArtistId(long id);
     }
 }

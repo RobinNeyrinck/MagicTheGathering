@@ -18,4 +18,9 @@ public class SqlArtistRepository : IArtistRepository
     {
         return _db.Artists.FirstOrDefault(a => a.Id == id);
     }
+
+    public async Task<IEnumerable<Artist>> GetArtistsAsync()
+    {
+        return await _db.Artists.ToListAsync();
+    }
 }
