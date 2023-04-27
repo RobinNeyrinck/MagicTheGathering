@@ -33,6 +33,7 @@ builder.Services.AddDbContext<mtg_v1Context>(
 );
 builder.Services.AddScoped<ICardRepository, SqlCardRepository>();
 builder.Services.AddScoped<ICardPropertiesRepository, SqlCardPropertiesRepository>();
+builder.Services.AddScoped<IArtistRepository,  SqlArtistRepository>();
 
 builder.Services.AddStackExchangeRedisCache(options =>
 {
@@ -65,6 +66,7 @@ builder.Services.AddAutoMapper(new System.Type[] {
     typeof(ColorProfile),
     typeof(RarityProfile),
     typeof(SetProfile),
+    typeof(ArtistProfile),
 });
 
 var app = builder.Build();
