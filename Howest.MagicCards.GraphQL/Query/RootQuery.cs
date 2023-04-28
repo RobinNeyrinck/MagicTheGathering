@@ -24,7 +24,7 @@ public class RootQuery : ObjectGraphType
 
                               if (first > 0)
                               {
-                                  return cardRepository.GetCards().Take(first).ToList();
+                                  return cardRepository.GetCards().ToFilteredList(filter).Take(first);
                               }
 
                               return cardRepository
