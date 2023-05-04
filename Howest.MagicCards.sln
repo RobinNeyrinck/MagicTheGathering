@@ -22,6 +22,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Howest.MagicCards.Shared", "Howest.MagicCards.Shared\Howest.MagicCards.Shared.csproj", "{42DEF710-10C4-4CFB-A84E-EB41FFB0DEA9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Howest.MagicCards.Web", "Howest.MagicCards.Web\Howest.MagicCards.Web.csproj", "{608AC155-6FF8-427D-9BCF-F73D121CD33A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{42DEF710-10C4-4CFB-A84E-EB41FFB0DEA9} = {42DEF710-10C4-4CFB-A84E-EB41FFB0DEA9}
+		{A0833A07-320D-4124-8410-C0954C9E99D6} = {A0833A07-320D-4124-8410-C0954C9E99D6}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Howest.MagicCards.MinimalAPI", "Howest.MagicCards.MinimalAPI\Howest.MagicCards.MinimalAPI.csproj", "{9DFA170D-ED39-4F08-AA37-BC5DFC84E298}"
 EndProject

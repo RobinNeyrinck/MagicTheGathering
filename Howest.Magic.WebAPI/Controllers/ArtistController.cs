@@ -1,4 +1,6 @@
-﻿namespace Howest.MagicCards.WebAPI.Controllers;
+﻿using Howest.MagicCards.Shared.DTO;
+
+namespace Howest.MagicCards.WebAPI.Controllers;
 
 [ApiVersion("1.1")]
 [ApiVersion("1.5")]

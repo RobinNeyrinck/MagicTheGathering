@@ -1,7 +1,7 @@
-﻿namespace Shared.DTO;
+﻿namespace Howest.MagicCards.Shared.DTO;
 
 public record ColorDTO
 {
-    public string Code { get; set; }
-    public string Name { get; set; }
+	public string Code { get; set; }
+	public string Name { get; set; }
 }

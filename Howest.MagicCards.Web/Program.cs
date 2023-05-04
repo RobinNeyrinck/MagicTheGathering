@@ -1,8 +1,20 @@
+using Howest.MagicCards.DAL.Models;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
+var config = builder.Configuration;
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
+
+builder.Services.AddDbContext<mtg_v1Context>(
+	options => options.UseSqlServer(config.GetConnectionString("mtgDb"))
+);
+builder.Services.AddScoped<ICardRepository, SqlCardRepository>();
+builder.Services.AddAutoMapper(new System.Type[] {
+	typeof(CardProfile),
+});
 
 var app = builder.Build();
 

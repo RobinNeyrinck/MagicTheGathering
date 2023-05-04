@@ -36,7 +36,7 @@
 		<Using Include="Microsoft.EntityFrameworkCore"/>
 		<Using Include="AutoMapper" />
 		<Using Include="AutoMapper.QueryableExtensions" />
-		<Using Include="Shared.DTO;" />
+		<Using Include="Howest.MagicCards.Shared.DTO" />
 	</ItemGroup>
 
 </Project>

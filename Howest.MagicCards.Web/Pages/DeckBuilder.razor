@@ -1,5 +1,8 @@
 ﻿@page "/deckbuilder"
 
+@inject ICardRepository CardService
+@inject IMapper mapper
+
 <PageTitle>DeckBuilder</PageTitle>
 
 <header>
@@ -7,28 +10,10 @@
 </header>
 
 <main>
-	<form class="filter-form">
-		<label for="name">Name</label>
-		<input type="text" id="name" name="name" placeholder="Deck name" />
-		<label for="text">Text</label>
-		<input type="text" id="text" placeholder="Text" />
-		<label for="set">Set</label>
-		<select id="set">
-			<!-- TODO: load options from data -->
-		</select>
-		<label for="rarity">Rarity</label>
-		<select id="rarity">
-			<!-- TODO: load options from data -->
-		</select>
-		<label for="type">Card Type</label>
-		<select id="type">
-		</select>
-		<button id="sortbyname" class="btn-secondary">Name</button>
-		<input type="submit" placeholder="Submit" class="btn-primary" />
-	</form>
+	<CardFilter></CardFilter>
 	<div class="container">
 		<div id="cards">
-			<!-- TODO: figure out strategy of displaying cards -->
+			<CardList cards="cards"></CardList>
 		</div>
 		<div id="deck">
 			<!-- TODO: figure out strategy of displaying deck -->
@@ -37,5 +22,14 @@
 </main>
 
 @code {
+	private string title="DeckBuilder";
+	private IEnumerable<CardDTO>? cards = null;
+
+	protected override void OnInitialized()
+	{
+		cards = CardService.GetCards()
+							.ProjectTo<CardDTO>(mapper.ConfigurationProvider)
+							.ToList();
+	}
 
 }

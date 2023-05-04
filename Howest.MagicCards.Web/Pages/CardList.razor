@@ -1,0 +1,17 @@
+<table>
+	<tbody>
+		@foreach (CardDTO card in cards)
+		{
+			<tr>
+				<td>@card.Name</td>
+				<td>@card.ArtistName</td>
+				<td>@card.Description</td>
+			</tr>
+		}
+	</tbody>
+</table>
+
+@code {
+	[Parameter]
+	public IEnumerable<CardDTO>? cards { get; set; }
+}

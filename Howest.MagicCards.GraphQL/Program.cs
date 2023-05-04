@@ -1,3 +1,5 @@
+using Howest.MagicCards.GraphQL.Schema;
+
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager config = builder.Configuration;
 

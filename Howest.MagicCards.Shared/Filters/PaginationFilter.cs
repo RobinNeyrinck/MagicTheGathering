@@ -2,8 +2,8 @@
 
 public class PaginationFilter
 {
-    // TODO: fix pagination for max size
-    const int _maxPageSize = 20;
+	// TODO: fix pagination for max size
+	const int _maxPageSize = 1;
 
     private int _pageSize = _maxPageSize;
     private int _pageNumber = 1;
@@ -18,7 +18,7 @@ public class PaginationFilter
 
     public int PageSize
     {
-        get { return _pageSize; }
-        set { _pageSize = (value > _maxPageSize || value < 1) ? _maxPageSize : value; }
+        get { return _pageSize > MaxPageSize ? MaxPageSize : _pageSize; }
+        set { _pageSize = (value > _maxPageSize || value < 1) ? MaxPageSize : value; }
     }
 }

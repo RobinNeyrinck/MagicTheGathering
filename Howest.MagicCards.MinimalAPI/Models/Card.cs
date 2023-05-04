@@ -7,6 +7,6 @@ public class Card
     public string Id { get; set; } = string.Empty;
     [BsonElement("name")]
     public string Name { get; set; }
-    [BsonElement("amounnt")]
+    [BsonElement("amount")]
     public int Amount { get; set; }
 }

@@ -1,7 +1,7 @@
+using Howest.MagicCards.Shared.Mappings;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using Shared.Mappings;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager config = builder.Configuration;

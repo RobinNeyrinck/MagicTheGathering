@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -16,5 +16,18 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
+	
+	<ItemGroup>
+		<ProjectReference Include="..\Howest.Magic.DAL\Howest.MagicCards.DAL.csproj" />
+		<ProjectReference Include="..\Howest.MagicCards.Shared\Howest.MagicCards.Shared.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Using Include="AutoMapper"/>
+		<Using Include="AutoMapper.QueryableExtensions"/>
+		<Using Include="Howest.MagicCards.DAL.Repositories"/>
+		<Using Include="Howest.MagicCards.Shared.DTO"/>
+		<Using Include="Howest.MagicCards.Shared.Mappings"/>
+	</ItemGroup>
 
 </Project>

@@ -9,10 +9,9 @@ public static class CardExtensions
 {
 	public static IQueryable<Card> Sort(this IQueryable<Card> cards, string orderByQueryString)
 	{
-		// TODO: fix sorting
 		if (string.IsNullOrEmpty(orderByQueryString))
 		{
-			return cards.OrderBy(c => c.Name);
+			return cards.OrderBy(c => c.Id);
 		}
 
 		string[] orderParameters = orderByQueryString.Trim().Split(',');

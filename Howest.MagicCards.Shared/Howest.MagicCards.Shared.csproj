@@ -24,7 +24,7 @@
 
 	<ItemGroup>
 		<Using Include="Howest.MagicCards.DAL.Models" />
-		<Using Include="Shared.DTO" />
+		<Using Include="Howest.MagicCards.Shared.DTO" />
 		<Using Include="AutoMapper" />
 	</ItemGroup>
 
