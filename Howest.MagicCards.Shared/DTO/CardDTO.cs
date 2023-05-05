@@ -7,4 +7,5 @@ public record CardDTO
 	public string Description { get; set; }
 	public string ArtistName { get; set; }
 	public string Set { get; set; }
+	public string Rarity { get; set; }
 }

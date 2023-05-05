@@ -15,6 +15,9 @@ public class CardProfile : Profile
 			)
 			.ForMember(dto => dto.Set,
 				opt => opt.MapFrom(card => card.SetCodeNavigation.Name)
+			)
+			.ForMember(dto => dto.Rarity,
+							opt => opt.MapFrom(card => card.RarityCodeNavigation.Name)
 			);
 
 		CreateMap<Card, CardDetailDTO>()

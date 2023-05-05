@@ -1,15 +1,22 @@
-<table>
-	<tbody>
-		@foreach (CardDTO card in cards)
-		{
-			<tr>
-				<td>@card.Name</td>
-				<td>@card.ArtistName</td>
-				<td>@card.Description</td>
-			</tr>
+<section class="d-flex flex-wrap m-auto justify-content-center">
+	@if (cards == null)
+	{
+		<p class="w-100 text-center"><em>Loading...</em></p>
+	}
+	else {
+		@foreach (CardDTO card in cards) {
+			<article class="border p-3 m-3 d-flex flex-column" style="flex-basis: 25%">
+				<h3>@card.Name</h3>
+				<p>@card.ArtistName</p>
+				<p>@card.Description</p>
+				<div class="d-flex justify-content-between align-self-end">
+					<p>@card.Set</p>
+					<p>@card.Rarity</p>
+				</div>
+			</article>
 		}
-	</tbody>
-</table>
+	}
+</section>
 
 @code {
 	[Parameter]

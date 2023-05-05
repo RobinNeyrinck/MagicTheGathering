@@ -29,6 +29,7 @@
 	{
 		cards = CardService.GetCards()
 							.ProjectTo<CardDTO>(mapper.ConfigurationProvider)
+							.Take(10)
 							.ToList();
 	}
 
