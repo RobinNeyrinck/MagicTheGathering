@@ -109,11 +109,11 @@ public class CardService
 
 		string queryString = string.Join("&", queryParams
 			.Where(kv => !string.IsNullOrEmpty(kv.Value))
-			.Select(kv => $"{kv.Key}={HttpUtility.UrlEncode(kv.Value)}"));
+			.Select(kv => $"{kv.Key}={kv.Value}"));
 
 		string apiUrl = $"v1.1/Card?{queryString}";
 
-		_logger.LogInformation($"API URL: {apiUrl}");
+		_logger.LogInformation($"API URL: {queryString}");
 
 		HttpResponseMessage response = await _httpClient.GetAsync(apiUrl);
 
