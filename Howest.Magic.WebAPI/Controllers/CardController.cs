@@ -263,9 +263,16 @@ public class CardController : ControllerBase
 	[MapToApiVersion("1.5")]
 	public async Task<ActionResult<Response<IEnumerable<CardDTO>>>> GetDetailedCardsAsync([FromServices] IConfiguration config, [FromQuery] CardFilter filter)
 	{
-		//if (!filter.ValidFilters) {
-		//    return BadRequest("Filters are not applicable");
-		//}
+		filter.MaxPageSize = int.Parse(config["maxPageSize"]);
+		if (filter.PageSize == 1)
+		{
+			filter.PageSize = filter.MaxPageSize;
+		}
+
+
+		int skipAmount = (filter.PageNumber - 1) * filter.PageSize;
+		int totalRecords = await _cardRepository.GetCards().CountAsync();
+		int totalPages = (int)Math.Ceiling((double)totalRecords / filter.PageSize);
 		string jsonData = await _cache.GetStringAsync(_key);
 		IEnumerable<CardDetailDTO>? cachedResult = (jsonData is not null)
 											? JsonSerializer.Deserialize<IEnumerable<CardDetailDTO>>(jsonData)
@@ -274,18 +281,18 @@ public class CardController : ControllerBase
 		{
 			cachedResult = await _cardRepository.GetCards()
 									.Sort(filter.Query ?? string.Empty)
+									.ToFilteredList(filter)
+									.ToPagedList(filter.PageSize, skipAmount)
 									.ProjectTo<CardDetailDTO>(_mapper.ConfigurationProvider)
-									.OrderBy(c => c.Id)
-									.ToPagedList(filter.PageNumber, filter.PageSize)
 									.ToListAsync();
+
 			DistributedCacheEntryOptions cacheOptions = new DistributedCacheEntryOptions()
 			{
-				AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(30)
+				AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(1)
 			};
 			jsonData = JsonSerializer.Serialize(cachedResult);
 			await _cache.SetStringAsync(_key, jsonData, cacheOptions);
 		}
-		filter.MaxPageSize = int.Parse(config["maxPageSize"]);
 		return (cachedResult is IEnumerable<CardDetailDTO> allCards)
 			? Ok(
 			new PagedResponse<IEnumerable<CardDetailDTO>>(
@@ -294,7 +301,8 @@ public class CardController : ControllerBase
 					filter.PageSize
 				  )
 			{
-				TotalRecords = allCards.Count()
+				TotalRecords = totalRecords,
+				TotalPages = totalPages
 			})
 			: NotFound(new Response<CardDetailDTO>
 			{

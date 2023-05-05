@@ -2,7 +2,6 @@
 {
     public class CardFilter : PaginationFilter
     {
-        public bool ValidFilters => ValidateFilters();
         public string? Query { get; set; }
 
         #region filters
@@ -17,10 +16,5 @@
         public string Text { get; set; }
         public string Toughness { get; set; }
         #endregion
-
-        private bool ValidateFilters()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

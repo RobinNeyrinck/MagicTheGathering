@@ -37,7 +37,7 @@ else
 				<option value="@type.Name">@type.Name</option>
 			})
 		</select>
-		<button id="sortbyname" class="btn-secondary" type="button">Name</button>
+		<button id="sortbyname" class="btn-secondary" type="button" @onclick="@sort" @onclick:preventDefault>Name</button>
 		<input type="submit" placeholder="Submit" class="btn-primary" @onclick="@onPost" @onclick:preventDefault />
 	</form>
 }
@@ -51,6 +51,9 @@ else
 	public IEnumerable<TypeDTO>? types { get; set; }
 	[Parameter]
 	public EventCallback<CardFilterArgs> OnFilterChanged { get; set; }
+	[Parameter]
+	public EventCallback<bool> OnSortChanged { get; set; }
+	private bool isAscending = false;
 	private string Name { get; set; }
 	private string Text { get; set; }
 	private string Set { get; set; }
@@ -59,13 +62,6 @@ else
 
 	public async void onPost()
 	{
-		logger.LogInformation("Post");
-		logger.LogInformation("Name: {0}", Name);
-		logger.LogInformation("Text: {0}", Text);
-		logger.LogInformation("Set: {0}", Set);
-		logger.LogInformation("Rarity: {0}", Rarity);
-		logger.LogInformation("Type: {0}", Type);
-
 		CardFilterArgs filterArgs = new CardFilterArgs
 			{
 				Name = Name,
@@ -78,6 +74,11 @@ else
 		await OnFilterChanged.InvokeAsync(filterArgs);
 	}
 
+	public async void sort()
+	{
+		isAscending = !isAscending;
+		await OnSortChanged.InvokeAsync(isAscending);
+	}
 
 
 }

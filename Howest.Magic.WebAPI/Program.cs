@@ -1,4 +1,5 @@
 using Howest.MagicCards.Shared.Mappings;
+using Howest.MagicCards.WebAPI.Controllers;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);

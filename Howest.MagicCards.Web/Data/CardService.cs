@@ -1,19 +1,15 @@
 ﻿using System.Text.Json;
-using System.Web;
 using Howest.MagicCards.WebAPI.Wrappers;
 
 namespace Howest.MagicCards.Web.Data;
 
 public class CardService
 {
-	private readonly ILogger _logger = new Logger<CardService>(new LoggerFactory());
-	private readonly int _maxAmount;
 	private readonly HttpClient _httpClient;
 	private readonly JsonSerializerOptions _jsonOptions;
 
-	public CardService(IMapper mapper, IConfiguration config, IHttpClientFactory httpClientFactory)
+	public CardService(IHttpClientFactory httpClientFactory)
 	{
-		_maxAmount = config.GetValue<int>("maxPageSize");
 		_httpClient = httpClientFactory.CreateClient("CardsAPI");
 		_jsonOptions = new JsonSerializerOptions
 		{
@@ -27,10 +23,10 @@ public class CardService
 		HttpResponseMessage reponse = await _httpClient.GetAsync(
 			$"v1.1/Card"
 			);
-		string apiResponse = await reponse.Content.ReadAsStringAsync();
 
 		if (reponse.IsSuccessStatusCode)
 		{
+			string apiResponse = await reponse.Content.ReadAsStringAsync();
 			PagedResponse<IEnumerable<CardDTO>>? result = JsonSerializer.Deserialize<PagedResponse<IEnumerable<CardDTO>>>(apiResponse, _jsonOptions);
 			return result?.Data;
 		}
@@ -47,9 +43,9 @@ public class CardService
 			$"v1.1/Card/sets"
 			);
 
-		string apiResponse = await response.Content.ReadAsStringAsync();
 		if (response.IsSuccessStatusCode)
 		{
+			string apiResponse = await response.Content.ReadAsStringAsync();
 			IEnumerable<SetDTO>? result = JsonSerializer.Deserialize<IEnumerable<SetDTO>>(apiResponse, _jsonOptions);
 			return result;
 		}
@@ -64,10 +60,10 @@ public class CardService
 		HttpResponseMessage response = await _httpClient.GetAsync(
 						$"v1.1/Card/types"
 									);
-		string apiResponse = await response.Content.ReadAsStringAsync();
 
 		if (response.IsSuccessStatusCode)
 		{
+			string apiResponse = await response.Content.ReadAsStringAsync();
 			IEnumerable<TypeDTO>? result = JsonSerializer.Deserialize<IEnumerable<TypeDTO>>(apiResponse, _jsonOptions);
 			return result;
 		}
@@ -82,9 +78,9 @@ public class CardService
 		HttpResponseMessage response = await _httpClient.GetAsync(
 									$"v1.1/Card/rarities"
 																		);
-		string apiResponse = await response.Content.ReadAsStringAsync();
 		if (response.IsSuccessStatusCode)
 		{
+			string apiResponse = await response.Content.ReadAsStringAsync();
 			IEnumerable<RarityDTO>? result = JsonSerializer.Deserialize<IEnumerable<RarityDTO>>(apiResponse, _jsonOptions);
 			return result;
 		}
@@ -113,7 +109,32 @@ public class CardService
 
 		string apiUrl = $"v1.1/Card?{queryString}";
 
-		_logger.LogInformation($"API URL: {queryString}");
+		HttpResponseMessage response = await _httpClient.GetAsync(apiUrl);
+
+		if (response.IsSuccessStatusCode)
+		{
+			string apiResponse = await response.Content.ReadAsStringAsync();
+			PagedResponse<IEnumerable<CardDTO>> result = JsonSerializer.Deserialize<PagedResponse<IEnumerable<CardDTO>>>(apiResponse, _jsonOptions);
+			return result?.Data;
+		}
+		else
+		{
+			return new List<CardDTO>();
+		}
+	}
+
+	public async Task<IEnumerable<CardDTO>>? Sort(bool ascending)
+	{
+		string direction;
+		if (ascending)
+		{
+			direction = "asc";
+		} else
+		{
+			direction = "desc";
+		}
+
+		string apiUrl = $"v1.5/Card?query=name {direction}";
 
 		HttpResponseMessage response = await _httpClient.GetAsync(apiUrl);
 
@@ -127,6 +148,8 @@ public class CardService
 		{
 			return new List<CardDTO>();
 		}
+
+
 	}
 
 	#endregion
