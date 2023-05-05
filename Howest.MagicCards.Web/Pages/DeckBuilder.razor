@@ -29,12 +29,12 @@
 	private IEnumerable<RarityDTO>? rarities = null;
 	private IEnumerable<TypeDTO>? types = null;
 
-	protected override void OnInitialized()
+	protected override async Task OnInitializedAsync()
 	{
-		cards = _cardRepository.GetCards();
-		sets = _cardRepository.GetSets();
-		rarities = _cardRepository.GetRarities();
-		types = _cardRepository.GetTypes();
+		cards = await _cardRepository.GetCardsAsync();
+		sets = await _cardRepository.GetSetsAsync();
+		rarities = await _cardRepository.GetRaritiesAsync();
+		types = await _cardRepository.GetTypesAsync();
 	}
 
 }

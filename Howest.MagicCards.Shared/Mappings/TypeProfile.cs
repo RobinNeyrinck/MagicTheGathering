@@ -6,7 +6,9 @@ public class TypeProfile : Profile
 	{
 		CreateMap<DAL.Models.Type, TypeDTO>()
 			.ForMember(dto => dto.Id,
-			opt => opt.MapFrom(rarity => (int)rarity.Id));
+			opt => opt.MapFrom(type => (int)type.Id))
+			.ForMember(dto => dto.Type,
+			opt => opt.MapFrom(type => type.Type1));
 
 	}
 

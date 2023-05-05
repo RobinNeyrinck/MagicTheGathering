@@ -1,32 +1,45 @@
-<form class="filter-form">
-	<label for="name">Name</label>
-	<input type="text" id="name" name="name" placeholder="Deck name" />
-	<label for="text">Text</label>
-	<input type="text" id="text" placeholder="Text" />
-	<label for="set">Set</label>
-	<select id="set">
-		@foreach (SetDTO set in sets)
-		{
-			<option value="@set.Id">@set.Name</option>
-		})
-	</select>
-	<label for="rarity">Rarity</label>
-	<select id="rarity">
-		@foreach (RarityDTO rarity in rarities)
-		{
-			<option value="@rarity.Id">@rarity.Name</option>
-		})
-	</select>
-	<label for="type">Card Type</label>
-	<select id="type">
-		@foreach (TypeDTO type in types)
-		{
-			<option value="@type.Id">@type.Name</option>
-		})
-	</select>
-	<button id="sortbyname" class="btn-secondary">Name</button>
-	<input type="submit" placeholder="Submit" class="btn-primary" />
-</form>
+@using Microsoft.Extensions.Logging;
+@inject ILogger<CardFilter> logger;
+
+@if (sets == null || rarities == null || types == null)
+{
+	<p class="w-100 text-center"><em>Loading...</em></p>
+}
+else
+{
+	<form class="filter-form">
+		<label for="name">Name</label>
+		<input type="text" id="name" name="name" placeholder="Deck name" @bind="@Name" @oninput="@((e) => { @Name=(string)e.Value;})" />
+		<label for="text">Text</label>
+		<input type="text" id="text" placeholder="Text" @bind="@Text" @oninput="@((e) => { @Text=(string)e.Value;})" />
+		<label for="set">Set</label>
+		<select id="set" @bind="@Set" @oninput="@((e) => { @Set=(string)e.Value;})">
+			<option value="0">All Sets</option>
+			@foreach (SetDTO set in sets)
+			{
+				<option value="@set.Id">@set.Name</option>
+			})
+		</select>
+		<label for="rarity">Rarity</label>
+		<select id="rarity" @bind="@Rarity" @oninput="@((e) => { @Rarity=(string)e.Value;})">
+			<option value="0">All Rarities</option>
+			@foreach (RarityDTO rarity in rarities)
+			{
+				<option value="@rarity.Id">@rarity.Name</option>
+			})
+		</select>
+		<label for="type">Card Type</label>
+		<select id="type" @bind="@Type" @oninput="@((e) => { @Type=(string)e.Value;})">
+			<option value="0">All Types</option>
+			@foreach (TypeDTO type in types)
+			{
+				<option value="@type.Id">@type.Name</option>
+			})
+		</select>
+		<button id="sortbyname" class="btn-secondary" type="button">Name</button>
+		<input type="submit" placeholder="Submit" class="btn-primary" @onclick="@onPost" @onclick:preventDefault />
+	</form>
+}
 
 @code {
 	[Parameter]
@@ -35,4 +48,19 @@
 	public IEnumerable<RarityDTO>? rarities { get; set; }
 	[Parameter]
 	public IEnumerable<TypeDTO>? types { get; set; }
+	private string Name { get; set; }
+	private string Text { get; set; }
+	private string Set { get; set; }
+	private string Rarity { get; set; }
+	private string Type { get; set; }
+
+	public void onPost()
+	{
+		logger.LogInformation("Post");
+		logger.LogInformation("Name: {0}", Name);
+		logger.LogInformation("Text: {0}", Text);
+		logger.LogInformation("Set: {0}", Set);
+		logger.LogInformation("Rarity: {0}", Rarity);
+		logger.LogInformation("Type: {0}", Type);
+	}
 }

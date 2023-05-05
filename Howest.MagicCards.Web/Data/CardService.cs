@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Diagnostics;
+using System.Text.Json;
+using Howest.MagicCards.WebAPI.Wrappers;
 
 namespace Howest.MagicCards.Web.Data;
 
@@ -8,42 +10,91 @@ public class CardService
 	private readonly ICardPropertiesRepository _cardProperties;
 	private readonly IMapper _mapper;
 	private readonly int _maxAmount;
+	private readonly HttpClient _httpClient;
+	private readonly JsonSerializerOptions _jsonOptions;
 
-	public CardService(ICardRepository cardRepository, IMapper mapper, IConfiguration config, ICardPropertiesRepository cardProperties)
+	public CardService(ICardRepository cardRepository, IMapper mapper, IConfiguration config, ICardPropertiesRepository cardProperties, IHttpClientFactory httpClientFactory)
 	{
 		_cardRepository = cardRepository;
 		_cardProperties = cardProperties;
 		_mapper = mapper;
 		_maxAmount = config.GetValue<int>("maxPageSize");
+		_httpClient = httpClientFactory.CreateClient("CardsAPI");
+		_jsonOptions = new JsonSerializerOptions
+		{
+			PropertyNameCaseInsensitive = true,
+		};
 	}
 
-	public IEnumerable<CardDTO> GetCards()
+	public async Task<IEnumerable<CardDTO>> GetCardsAsync()
 	{
-		return _cardRepository.GetCards()
-			.ProjectTo<CardDTO>(_mapper.ConfigurationProvider)
-			.OrderBy(c => c.Id)
-			.Take(_maxAmount)
-			.ToList();
+		HttpResponseMessage reponse = await _httpClient.GetAsync(
+			$"v1.1/Card"
+			);
+		string apiResponse = await reponse.Content.ReadAsStringAsync();
+
+		if (reponse.IsSuccessStatusCode)
+		{
+			PagedResponse<IEnumerable<CardDTO>>? result = JsonSerializer.Deserialize<PagedResponse<IEnumerable<CardDTO>>>(apiResponse, _jsonOptions);
+			return result?.Data;
+		}
+		else
+		{
+			return new List<CardDTO>();
+		}
+
 	}
 
-	public IEnumerable<SetDTO> GetSets()
+	public async Task<IEnumerable<SetDTO>> GetSetsAsync()
 	{
-		return _cardProperties.GetSets()
-			.ProjectTo<SetDTO>(_mapper.ConfigurationProvider)
-			.ToList();
+		HttpResponseMessage response = await _httpClient.GetAsync(
+			$"v1.1/Card/sets"
+			);
+
+		string apiResponse = await response.Content.ReadAsStringAsync();
+		if (response.IsSuccessStatusCode)
+		{
+			IEnumerable<SetDTO>? result = JsonSerializer.Deserialize<IEnumerable<SetDTO>>(apiResponse, _jsonOptions);
+			return result;
+		}
+		else
+		{
+			return new List<SetDTO>();
+		}
 	}
 
-	public IEnumerable<TypeDTO> GetTypes()
+	public async Task<IEnumerable<TypeDTO>> GetTypesAsync()
 	{
-		return _cardProperties.GetTypes()
-			.ProjectTo<TypeDTO>(_mapper.ConfigurationProvider)
-			.ToList();
+		HttpResponseMessage response = await _httpClient.GetAsync(
+						$"v1.1/Card/types"
+									);
+		string apiResponse = await response.Content.ReadAsStringAsync();
+
+		if (response.IsSuccessStatusCode)
+		{
+			IEnumerable<TypeDTO>? result = JsonSerializer.Deserialize<IEnumerable<TypeDTO>>(apiResponse, _jsonOptions);
+			return result;
+		}
+		else
+		{
+			return new List<TypeDTO>();
+		}
 	}
 
-	public IEnumerable<RarityDTO> GetRarities()
+	public async Task<IEnumerable<RarityDTO>> GetRaritiesAsync()
 	{
-		return _cardProperties.GetRarities()
-			.ProjectTo<RarityDTO>(_mapper.ConfigurationProvider)
-			.ToList();
+		HttpResponseMessage response = await _httpClient.GetAsync(
+									$"v1.1/Card/rarities"
+																		);
+		string apiResponse = await response.Content.ReadAsStringAsync();
+		if (response.IsSuccessStatusCode)
+		{
+			IEnumerable<RarityDTO>? result = JsonSerializer.Deserialize<IEnumerable<RarityDTO>>(apiResponse, _jsonOptions);
+			return result;
+		}
+		else
+		{
+			return new List<RarityDTO>();
+		}
 	}
 }

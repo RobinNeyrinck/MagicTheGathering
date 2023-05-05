@@ -21,6 +21,11 @@ builder.Services.AddAutoMapper(new System.Type[] {
 });
 builder.Services.AddScoped<CardService>();
 
+builder.Services.AddHttpClient("CardsAPI", client =>
+{
+	client.BaseAddress = new Uri("https://localhost:7103/api/");
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -51,8 +51,8 @@ public class CardController : ControllerBase
 		{
 			cachedResult = await _cardRepository.GetCards()
 									.ToFilteredList(filter)
-									.Skip(skipAmount)
-									.Take(filter.PageSize)
+									.OrderBy(c => c.Id)
+									.ToPagedList(filter.PageSize, skipAmount)
 									.ProjectTo<CardDTO>(_mapper.ConfigurationProvider)
 									.ToListAsync();
 
@@ -219,6 +219,39 @@ public class CardController : ControllerBase
 		}
 	}
 
+	[HttpGet("types")]
+	[ProducesResponseType(typeof(IEnumerable<TypeDTO>), 200)]
+	[ProducesResponseType(typeof(string), 404)]
+	[ProducesResponseType(typeof(string), 500)]
+	[MapToApiVersion("1.1")]
+	public async Task<ActionResult<Response<IEnumerable<TypeDTO>>>> GetTypes()
+	{
+		try
+		{
+			return (_cardPropertiesRepository.GetTypes() is IQueryable<DAL.Models.Type> allTypes)
+				? Ok(await allTypes
+										.ProjectTo<TypeDTO>(_mapper.ConfigurationProvider)
+																.ToListAsync())
+				: NotFound(new Response<TypeDTO>
+				{
+					Succeeded = false,
+					Errors = new[] { $"Status code: {StatusCodes.Status404NotFound}" },
+					Message = $"No types found"
+				});
+		}
+		catch (Exception ex)
+		{
+			return StatusCode(
+				StatusCodes.Status500InternalServerError,
+				new Response<TypeDTO>
+				{
+					Succeeded = false,
+					Errors = new[] { ex.Message },
+					Message = $"Error while retrieving types"
+				});
+		}
+	}
+
 	#endregion
 	#endregion
 
@@ -242,6 +275,7 @@ public class CardController : ControllerBase
 			cachedResult = await _cardRepository.GetCards()
 									.Sort(filter.Query ?? string.Empty)
 									.ProjectTo<CardDetailDTO>(_mapper.ConfigurationProvider)
+									.OrderBy(c => c.Id)
 									.ToPagedList(filter.PageNumber, filter.PageSize)
 									.ToListAsync();
 			DistributedCacheEntryOptions cacheOptions = new DistributedCacheEntryOptions()
