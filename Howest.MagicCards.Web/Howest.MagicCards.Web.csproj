@@ -23,11 +23,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Using Include="AutoMapper"/>
-		<Using Include="AutoMapper.QueryableExtensions"/>
-		<Using Include="Howest.MagicCards.DAL.Repositories"/>
-		<Using Include="Howest.MagicCards.Shared.DTO"/>
-		<Using Include="Howest.MagicCards.Shared.Mappings"/>
+		<Using Include="AutoMapper" />
+		<Using Include="AutoMapper.QueryableExtensions" />
+		<Using Include="Howest.MagicCards.DAL.Repositories" />
+		<Using Include="Howest.MagicCards.Shared.DTO" />
+		<Using Include="Howest.MagicCards.Shared.Mappings" />
+		<Using Include="Howest.MagicCards.Web.Data" />
 	</ItemGroup>
 
 </Project>

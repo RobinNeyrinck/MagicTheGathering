@@ -15,6 +15,7 @@ builder.Services.AddScoped<ICardRepository, SqlCardRepository>();
 builder.Services.AddAutoMapper(new System.Type[] {
 	typeof(CardProfile),
 });
+builder.Services.AddScoped<CardService>();
 
 var app = builder.Build();
 

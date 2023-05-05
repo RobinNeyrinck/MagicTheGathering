@@ -1,7 +1,9 @@
 ﻿@page "/deckbuilder"
+@using Howest.MagicCards.Web.Data;
+@using Microsoft.EntityFrameworkCore;
 
-@inject ICardRepository CardService
-@inject IMapper mapper
+@inject CardService _cardRepository
+@inject IMapper _mapper
 
 <PageTitle>DeckBuilder</PageTitle>
 
@@ -22,15 +24,12 @@
 </main>
 
 @code {
-	private string title="DeckBuilder";
+	private string title = "DeckBuilder";
 	private IEnumerable<CardDTO>? cards = null;
 
 	protected override void OnInitialized()
 	{
-		cards = CardService.GetCards()
-							.ProjectTo<CardDTO>(mapper.ConfigurationProvider)
-							.Take(10)
-							.ToList();
+		cards = _cardRepository.GetCards();
 	}
 
 }
