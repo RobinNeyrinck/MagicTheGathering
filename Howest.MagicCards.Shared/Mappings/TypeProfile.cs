@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Routing.Matching;
-
-namespace Howest.MagicCards.Shared.Mappings;
+﻿namespace Howest.MagicCards.Shared.Mappings;
 
 public class TypeProfile : Profile
 {
