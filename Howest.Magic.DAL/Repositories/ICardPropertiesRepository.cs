@@ -5,5 +5,6 @@
         IQueryable<Color> GetColors();
         IQueryable<Rarity> GetRarities();
         IQueryable<Set> GetSets();
+        IQueryable<Models.Type> GetTypes();
     }
 }

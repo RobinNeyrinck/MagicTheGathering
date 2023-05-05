@@ -6,6 +6,8 @@ public class RarityProfile : Profile
 {
 	public RarityProfile()
 	{
-		CreateMap<Rarity, RarityDTO>();
+		CreateMap<Rarity, RarityDTO>()
+			.ForMember(dto => dto.Id,
+			opt => opt.MapFrom(rarity => (int)rarity.Id));
 	}
 }

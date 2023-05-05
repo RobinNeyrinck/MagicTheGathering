@@ -5,15 +5,34 @@
 	<input type="text" id="text" placeholder="Text" />
 	<label for="set">Set</label>
 	<select id="set">
-		<!-- TODO: load options from data -->
+		@foreach (SetDTO set in sets)
+		{
+			<option value="@set.Id">@set.Name</option>
+		})
 	</select>
 	<label for="rarity">Rarity</label>
 	<select id="rarity">
-		<!-- TODO: load options from data -->
+		@foreach (RarityDTO rarity in rarities)
+		{
+			<option value="@rarity.Id">@rarity.Name</option>
+		})
 	</select>
 	<label for="type">Card Type</label>
 	<select id="type">
+		@foreach (TypeDTO type in types)
+		{
+			<option value="@type.Id">@type.Name</option>
+		})
 	</select>
 	<button id="sortbyname" class="btn-secondary">Name</button>
 	<input type="submit" placeholder="Submit" class="btn-primary" />
 </form>
+
+@code {
+	[Parameter]
+	public IEnumerable<SetDTO>? sets { get; set; }
+	[Parameter]
+	public IEnumerable<RarityDTO>? rarities { get; set; }
+	[Parameter]
+	public IEnumerable<TypeDTO>? types { get; set; }
+}

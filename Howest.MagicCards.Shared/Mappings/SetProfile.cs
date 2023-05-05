@@ -1,11 +1,12 @@
-﻿using Howest.MagicCards.Shared.DTO;
-
-namespace Howest.MagicCards.Shared.Mappings;
+﻿namespace Howest.MagicCards.Shared.Mappings;
 
 public class SetProfile : Profile
 {
 	public SetProfile()
 	{
-		CreateMap<Set, SetDTO>();
+		CreateMap<Set, SetDTO>()
+			.ForMember(dto => dto.Id,
+			opt => opt.MapFrom(set => (int)set.Id)
+		);
 	}
 }

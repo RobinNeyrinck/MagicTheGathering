@@ -1,6 +1,4 @@
 ﻿@page "/deckbuilder"
-@using Howest.MagicCards.Web.Components
-@using Microsoft.EntityFrameworkCore;
 
 @inject CardService _cardRepository
 @inject IMapper _mapper
@@ -12,10 +10,10 @@
 </header>
 
 <main>
-	<CardFilter></CardFilter>
+	<CardFilter sets="@sets" rarities="@rarities" types="@types"></CardFilter>
 	<div class="container">
 		<div id="cards">
-			<CardList cards="cards"></CardList>
+			<CardList cards="@cards"></CardList>
 		</div>
 		<div id="deck">
 			<!-- TODO: figure out strategy of displaying deck -->
@@ -27,10 +25,16 @@
 @code {
 	private string title = "DeckBuilder";
 	private IEnumerable<CardDTO>? cards = null;
+	private IEnumerable<SetDTO>? sets = null;
+	private IEnumerable<RarityDTO>? rarities = null;
+	private IEnumerable<TypeDTO>? types = null;
 
 	protected override void OnInitialized()
 	{
 		cards = _cardRepository.GetCards();
+		sets = _cardRepository.GetSets();
+		rarities = _cardRepository.GetRarities();
+		types = _cardRepository.GetTypes();
 	}
 
 }

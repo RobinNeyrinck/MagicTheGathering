@@ -21,5 +21,10 @@
         {
             return _db.Sets;
         }
+
+        public IQueryable<Models.Type> GetTypes()
+        {
+            return _db.Types;
+        }
     }
 }

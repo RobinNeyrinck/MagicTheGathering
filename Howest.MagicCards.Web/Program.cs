@@ -12,8 +12,12 @@ builder.Services.AddDbContext<mtg_v1Context>(
 	options => options.UseSqlServer(config.GetConnectionString("mtgDb"))
 );
 builder.Services.AddScoped<ICardRepository, SqlCardRepository>();
+builder.Services.AddScoped<ICardPropertiesRepository, SqlCardPropertiesRepository>();
 builder.Services.AddAutoMapper(new System.Type[] {
 	typeof(CardProfile),
+    typeof(TypeProfile),
+    typeof(SetProfile),
+    typeof(RarityProfile),
 });
 builder.Services.AddScoped<CardService>();
 
