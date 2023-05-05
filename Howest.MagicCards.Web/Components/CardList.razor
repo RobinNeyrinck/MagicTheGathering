@@ -5,15 +5,7 @@
 	}
 	else {
 		@foreach (CardDTO card in cards) {
-			<article class="border p-3 m-3 d-flex flex-column" style="flex-basis: 25%">
-				<h3>@card.Name</h3>
-				<p>@card.ArtistName</p>
-				<p>@card.Description</p>
-				<div class="d-flex justify-content-between align-self-end">
-					<p>@card.Set</p>
-					<p>@card.Rarity</p>
-				</div>
-			</article>
+			<Card card="card"></Card>
 		}
 	}
 </section>

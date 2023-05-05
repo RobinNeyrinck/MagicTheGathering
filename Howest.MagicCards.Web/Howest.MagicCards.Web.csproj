@@ -29,6 +29,7 @@
 		<Using Include="Howest.MagicCards.Shared.DTO" />
 		<Using Include="Howest.MagicCards.Shared.Mappings" />
 		<Using Include="Howest.MagicCards.Web.Data" />
+		<Using Include="Howest.MagicCards.Web.Components"/>
 	</ItemGroup>
 
 </Project>
