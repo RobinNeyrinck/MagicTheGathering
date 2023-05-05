@@ -1,23 +1,18 @@
-﻿using System.Diagnostics;
-using System.Text.Json;
+﻿using System.Text.Json;
+using System.Web;
 using Howest.MagicCards.WebAPI.Wrappers;
 
 namespace Howest.MagicCards.Web.Data;
 
 public class CardService
 {
-	private readonly ICardRepository _cardRepository;
-	private readonly ICardPropertiesRepository _cardProperties;
-	private readonly IMapper _mapper;
+	private readonly ILogger _logger = new Logger<CardService>(new LoggerFactory());
 	private readonly int _maxAmount;
 	private readonly HttpClient _httpClient;
 	private readonly JsonSerializerOptions _jsonOptions;
 
-	public CardService(ICardRepository cardRepository, IMapper mapper, IConfiguration config, ICardPropertiesRepository cardProperties, IHttpClientFactory httpClientFactory)
+	public CardService(IMapper mapper, IConfiguration config, IHttpClientFactory httpClientFactory)
 	{
-		_cardRepository = cardRepository;
-		_cardProperties = cardProperties;
-		_mapper = mapper;
 		_maxAmount = config.GetValue<int>("maxPageSize");
 		_httpClient = httpClientFactory.CreateClient("CardsAPI");
 		_jsonOptions = new JsonSerializerOptions
@@ -26,6 +21,7 @@ public class CardService
 		};
 	}
 
+	#region Data Loading
 	public async Task<IEnumerable<CardDTO>> GetCardsAsync()
 	{
 		HttpResponseMessage reponse = await _httpClient.GetAsync(
@@ -96,5 +92,51 @@ public class CardService
 		{
 			return new List<RarityDTO>();
 		}
+	}
+	#endregion
+
+	#region Data Manipulation
+	public async Task<IEnumerable<CardDTO>> Filter(CardFilterArgs filter)
+	{
+		var queryParams = new Dictionary<string, string>
+		{
+			["Name"] = filter.Name,
+			["Text"] = filter.Text,
+			["Set"] = filter.Set,
+			["Rarity"] = filter.Rarity,
+			//["type"] = filter.Type
+		};
+
+		string queryString = string.Join("&", queryParams
+			.Where(kv => !string.IsNullOrEmpty(kv.Value))
+			.Select(kv => $"{kv.Key}={HttpUtility.UrlEncode(kv.Value)}"));
+
+		string apiUrl = $"v1.1/Card?{queryString}";
+
+		_logger.LogInformation($"API URL: {apiUrl}");
+
+		HttpResponseMessage response = await _httpClient.GetAsync(apiUrl);
+
+		if (response.IsSuccessStatusCode)
+		{
+			string apiResponse = await response.Content.ReadAsStringAsync();
+			PagedResponse<IEnumerable<CardDTO>> result = JsonSerializer.Deserialize<PagedResponse<IEnumerable<CardDTO>>>(apiResponse, _jsonOptions);
+			return result?.Data;
+		}
+		else
+		{
+			return new List<CardDTO>();
+		}
+	}
+
+	#endregion
+
+	public class CardFilterArgs
+	{
+		public string Name { get; set; }
+		public string Text { get; set; }
+		public string Set { get; set; }
+		public string Rarity { get; set; }
+		public string Type { get; set; }
 	}
 }

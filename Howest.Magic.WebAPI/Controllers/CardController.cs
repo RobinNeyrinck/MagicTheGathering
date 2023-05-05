@@ -58,7 +58,7 @@ public class CardController : ControllerBase
 
 			DistributedCacheEntryOptions cacheOptions = new DistributedCacheEntryOptions()
 			{
-				AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(30)
+				AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(1)
 			};
 
 			jsonData = JsonSerializer.Serialize(cachedResult);

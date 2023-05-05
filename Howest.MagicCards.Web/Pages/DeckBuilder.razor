@@ -10,7 +10,7 @@
 </header>
 
 <main>
-	<CardFilter sets="@sets" rarities="@rarities" types="@types"></CardFilter>
+	<CardFilter sets="@sets" rarities="@rarities" types="@types" OnFilterChanged="UpdateCards"></CardFilter>
 	<div class="container">
 		<div id="cards">
 			<CardList cards="@cards"></CardList>
@@ -35,6 +35,11 @@
 		sets = await _cardRepository.GetSetsAsync();
 		rarities = await _cardRepository.GetRaritiesAsync();
 		types = await _cardRepository.GetTypesAsync();
+	}
+
+	protected async void UpdateCards(CardFilterArgs args)
+	{
+		cards = await _cardRepository.Filter(args);
 	}
 
 }

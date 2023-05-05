@@ -45,7 +45,8 @@ public static class CardExtensions
 
 	public static IQueryable<Card> ToFilteredList(this IQueryable<Card> cards, CardFilter filter)
 	{
-		GetFilters(filter, out string name, out string type, out string cardSet, out string rarity, out string artist, out ICollection<string> color, out string power, out string manaCost, out string text);
+		GetFilters(filter, out string name, out string type, out string cardSet, out string rarity, out string artist,
+			out ICollection<string> color, out string power, out string manaCost, out string text);
 
 		return cards
 			.Where(c => name == null || c.Name.Contains(name))
@@ -57,12 +58,12 @@ public static class CardExtensions
 			.Where(c => power == null || c.Power == power)
 			.Where(c => manaCost == null || c.ConvertedManaCost == manaCost)
 			.Where(c => text == null || c.Text.Contains(text));
-
 	}
 
 
 	#region Help Functions
-	private static void GetFilters(CardFilter filter, out string name, out string type, out string cardSet, out string rarity, out string artist, out ICollection<string> color, out string power, out string manaCost, out string text)
+	private static void GetFilters(CardFilter filter, out string name, out string type, out string cardSet, out string rarity,
+		out string artist, out ICollection<string> color, out string power, out string manaCost, out string text)
 	{
 		name = filter.Name;
 		type = filter.Type;
