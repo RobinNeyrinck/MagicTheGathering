@@ -1,0 +1,55 @@
+﻿@page "/cards/{id:long}"
+
+@inject CardService _cardRepository
+
+<h3>Detail of card '@cardTitle'</h3>
+
+@if (card == null)
+{
+	<p class="w-100 text-center"><em>Loading...</em></p>
+}
+else
+{
+	<article class="border p-3 m-3 d-flex flex-column" style="flex-basis: 25%">
+		<h3>@card.Name</h3>
+		<p class="fw-bold">@card.ArtistName</p>
+		<p class="fst-italic">@card.Description</p>
+		<p>Number: @card.Number</p>
+		<p>Specific Type: @card.Type</p>
+		<p>Power: @card.Power</p>
+		<p>Toughness: @card.Toughness</p>
+		<p>Flavor: @card.Flavor</p>
+		<p>Colors:</p>
+		<ul>
+			@foreach (string color in @card.Colors)
+			{
+				<li>@color</li>
+			}
+		</ul>
+		<p>Types:</p>
+		<ul>
+			@foreach (string type in @card.Types)
+			{
+				<li>@type</li>
+			}
+		</ul>
+		<p>Set: @card.Set</p>
+		<p>Rarity: @card.Rarity</p>
+		<NavLink class="nav-link" href="/deckbuilder">
+			<span class="oi oi-list" aria-hidden="true"></span> Go back to the deckbuilder!
+		</NavLink>
+	</article>
+}
+
+@code {
+	private string? cardTitle;
+	private CardDetailDTO? card;
+
+	[Parameter]
+	public long id { get; set; }
+	protected override async Task OnInitializedAsync()
+	{
+		card = await _cardRepository.GetCardByIdAsync(id);
+		cardTitle = card?.Name;
+	}
+}

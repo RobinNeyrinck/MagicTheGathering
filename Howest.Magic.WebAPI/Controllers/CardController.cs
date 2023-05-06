@@ -50,8 +50,8 @@ public class CardController : ControllerBase
 		if (cachedResult is null)
 		{
 			cachedResult = await _cardRepository.GetCards()
-									.ToFilteredList(filter)
 									.OrderBy(c => c.Id)
+									.ToFilteredList(filter)
 									.ToPagedList(filter.PageSize, skipAmount)
 									.ProjectTo<CardDTO>(_mapper.ConfigurationProvider)
 									.ToListAsync();
@@ -261,7 +261,7 @@ public class CardController : ControllerBase
 	[ProducesResponseType(typeof(string), 404)]
 	[ProducesResponseType(typeof(string), 500)]
 	[MapToApiVersion("1.5")]
-	public async Task<ActionResult<Response<IEnumerable<CardDTO>>>> GetDetailedCardsAsync([FromServices] IConfiguration config, [FromQuery] CardFilter filter)
+	public async Task<ActionResult<Response<IEnumerable<CardDetailDTO>>>> GetDetailedCardsAsync([FromServices] IConfiguration config, [FromQuery] CardFilter filter)
 	{
 		filter.MaxPageSize = int.Parse(config["maxPageSize"]);
 		if (filter.PageSize == 1)
@@ -310,6 +310,41 @@ public class CardController : ControllerBase
 				Errors = new[] { $"Status code: {StatusCodes.Status404NotFound}" },
 				Message = $"No cards found"
 			});
+	}
+
+	[HttpGet("{id:long}")]
+	[ProducesResponseType(typeof(CardDetailDTO), 200)]
+	[ProducesResponseType(typeof(string), 404)]
+	[ProducesResponseType(typeof(string), 500)]
+	[MapToApiVersion("1.5")]
+	public async Task<ActionResult<Response<CardDetailDTO>>> GetCardByIdAsync(long id)
+	{
+		int parsedID = (int)id;
+		try
+		{
+			return (_cardRepository.GetCardById(parsedID) is IQueryable<Card> card)
+				? Ok(await card
+							.ProjectTo<CardDetailDTO>(_mapper.ConfigurationProvider)
+							.FirstOrDefaultAsync())
+				: NotFound(new Response<CardDetailDTO>
+				{
+					Succeeded = false,
+					Errors = new[] { $"Status code: {StatusCodes.Status404NotFound}" },
+					Message = $"No card found with id: {id}"
+				});
+		}
+		catch (Exception ex)
+		{
+			return StatusCode(
+							   StatusCodes.Status500InternalServerError,
+											  new Response<CardDetailDTO>
+											  {
+												  Succeeded = false,
+												  Errors = new[] { ex.Message },
+												  Message = $"Error while retrieving card with id: {id}"
+											  });
+		}
+
 	}
 	#endregion
 

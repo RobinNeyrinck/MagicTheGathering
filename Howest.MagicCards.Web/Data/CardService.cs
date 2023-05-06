@@ -37,6 +37,24 @@ public class CardService
 
 	}
 
+	public async Task<CardDetailDTO> GetCardByIdAsync(long id)
+	{
+		HttpResponseMessage response = await _httpClient.GetAsync(
+	$"v1.5/Card/{id}"
+		);
+
+		if (response.IsSuccessStatusCode)
+		{
+			string apiResponse = await response.Content.ReadAsStringAsync();
+			CardDetailDTO? result = JsonSerializer.Deserialize<CardDetailDTO>(apiResponse, _jsonOptions);
+			return result;
+		}
+		else
+		{
+			return new CardDetailDTO();
+		}
+	}
+
 	public async Task<IEnumerable<SetDTO>> GetSetsAsync()
 	{
 		HttpResponseMessage response = await _httpClient.GetAsync(
@@ -129,7 +147,8 @@ public class CardService
 		if (ascending)
 		{
 			direction = "asc";
-		} else
+		}
+		else
 		{
 			direction = "desc";
 		}

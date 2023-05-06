@@ -1,14 +1,26 @@
-<article class="border p-3 m-3 d-flex flex-column" style="flex-basis: 25%">
-	<h3>@card.Name</h3>
-	<p>@card.ArtistName</p>
+@inject NavigationManager navigationManager
+
+<article class="border p-3 m-3 d-flex flex-column justify-content-between" style="flex-basis: 25%">
+	<div>
+		<h3>@card.Name</h3>
+		<p class="fw-bold">@card.ArtistName</p>
+	</div>
 	<p>@card.Description</p>
-	<div class="d-flex justify-content-between align-self-end">
-		<p>@card.Set</p>
-		<p>@card.Rarity</p>
+	<div>
+		<div class="d-flex justify-content-between">
+			<p>@card.Set</p>
+			<p>@card.Rarity</p>
+		</div>
+		<button @onclick="(() => showDetailedCard(card.Id))" @onclick:preventDefault class="align-self-end">View Details</button>
 	</div>
 </article>
 
 @code {
 	[Parameter]
 	public CardDTO card { get; set; }
+
+	private void showDetailedCard(long cardId)
+	{
+		navigationManager.NavigateTo($"/cards/{cardId}");
+	}
 }
