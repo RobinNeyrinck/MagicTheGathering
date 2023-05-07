@@ -1,12 +1,21 @@
-﻿namespace Howest.MagicCards.MinimalAPI.Mappings;
+﻿using System.Xml.Linq;
+using Microsoft.AspNetCore.Mvc;
 
-public static class EndpointExtensions
+namespace Howest.MagicCards.MinimalAPI.Mappings;
+
+public static class EndpointMappings
 {
     public static void MapEndpoints(this WebApplication app, string urlPrefix)
     {
         app.MapGet($"{urlPrefix}/cards", (ICardDeckService service) =>
         {
             return service.GetCards();
+        })
+            .WithTags("CardDeck");
+
+        app.MapGet($"{urlPrefix}/card", (ICardDeckService service, [FromQuery] string name) =>
+        {
+            return service.GetCard(name);
         })
             .WithTags("CardDeck");
 

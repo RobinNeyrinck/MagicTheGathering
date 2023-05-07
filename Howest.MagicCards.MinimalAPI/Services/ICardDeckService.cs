@@ -6,5 +6,6 @@ public interface ICardDeckService
     List<Card> GetCards();
     void RemoveCard(string id);
     void UpdateCard(string id, Card card);
+    Card GetCard(string name);
 
 }

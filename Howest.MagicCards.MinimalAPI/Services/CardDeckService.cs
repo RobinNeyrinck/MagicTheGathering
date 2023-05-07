@@ -16,7 +16,12 @@ public class CardDeckService : ICardDeckService
         return card;
     }
 
-    public List<Card> GetCards()
+	public Card GetCard(string name)
+	{
+        return _cardDeck.Find(card => card.Name == name).FirstOrDefault();
+	}
+
+	public List<Card> GetCards()
     {
         return _cardDeck.Find(card => true).ToList();
     }
