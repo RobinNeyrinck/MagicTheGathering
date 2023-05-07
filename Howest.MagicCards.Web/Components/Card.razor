@@ -11,13 +11,16 @@
 			<p>@card.Set</p>
 			<p>@card.Rarity</p>
 		</div>
-		<button @onclick="(() => showDetailedCard(card.Id))" @onclick:preventDefault class="align-self-end">View Details</button>
+		<button @onclick="(() => showDetailedCard(card.Id))" @onclick:preventDefault class="align-self-end">View Details!</button>
+		<button @onclick:preventDefault>Add to deck!</button>
 	</div>
 </article>
 
 @code {
 	[Parameter]
 	public CardDTO card { get; set; }
+	[Parameter]
+	public EventCallback<CardDTO> OnCardClicked { get; set; }
 
 	private void showDetailedCard(long cardId)
 	{

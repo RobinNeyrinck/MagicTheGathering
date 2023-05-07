@@ -1,6 +1,6 @@
 @using Microsoft.Extensions.Logging;
 @inject ILogger<CardFilter> logger;
-@inject CardService _cardService;
+@inject ICardService _cardService;
 
 @if (sets == null || rarities == null || types == null)
 {
@@ -76,8 +76,8 @@ else
 
 	public async void sort()
 	{
-		isAscending = !isAscending;
 		await OnSortChanged.InvokeAsync(isAscending);
+		isAscending = !isAscending;
 	}
 
 

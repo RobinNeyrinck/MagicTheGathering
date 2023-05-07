@@ -3,9 +3,11 @@
 	{
 		<p class="w-100 text-center"><em>Loading...</em></p>
 	}
-	else {
-		@foreach (CardDTO card in cards) {
-			<Card card="card"></Card>
+	else
+	{
+		@foreach (CardDTO card in cards)
+		{
+			<Card card="card" OnCardClicked="addCard"></Card>
 		}
 	}
 </section>
@@ -13,4 +15,11 @@
 @code {
 	[Parameter]
 	public IEnumerable<CardDTO>? cards { get; set; }
+	[Parameter]
+	public EventCallback<CardDTO> OnCardClicked { get; set; }
+
+	private async void addCard(CardDTO card)
+	{
+		await OnCardClicked.InvokeAsync(card);
+	}
 }

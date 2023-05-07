@@ -1,0 +1,20 @@
+@inject ILogger<DeckCard> logger;
+
+<article class="d-flex flex-row justify-content-between align-content-center flex-wrap border border-dark p-1">
+	<p style="margin: 0;">@card.Name</p>
+	<p class="fw-bold">@card.Amount</p>
+	<button class="oi oi-circle-x btn-secondary" @onclick="(() => removeCard(card))" @onclick:preventDefault></button>
+</article>
+
+@code {
+	[Parameter]
+	public MinimalAPI.Models.Card card { get; set; }
+	[Parameter]
+	public EventCallback<MinimalAPI.Models.Card> OnCardClicked { get; set; }
+
+	private async void removeCard(MinimalAPI.Models.Card card)
+	{
+		logger.LogInformation($"Card removed from deck: {card.Id}");
+		await OnCardClicked.InvokeAsync(card);
+	}
+}

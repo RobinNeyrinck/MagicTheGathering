@@ -19,11 +19,16 @@ builder.Services.AddAutoMapper(new System.Type[] {
     typeof(SetProfile),
     typeof(RarityProfile),
 });
-builder.Services.AddScoped<CardService>();
+builder.Services.AddScoped<ICardService, CardService>();
+builder.Services.AddScoped<IDeckService, DeckService>();
 
 builder.Services.AddHttpClient("CardsAPI", client =>
 {
 	client.BaseAddress = new Uri("https://localhost:7103/api/");
+});
+builder.Services.AddHttpClient<DeckService>("DeckAPI", client =>
+{
+	client.BaseAddress = new Uri("https://localhost:7061/api/");
 });
 
 var app = builder.Build();

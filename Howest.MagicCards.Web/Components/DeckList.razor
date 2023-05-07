@@ -1,0 +1,27 @@
+@inject ILogger<DeckList> logger;
+
+<section>
+	@if (@deck == null)
+	{
+		<p class="w-100 text-center"><em>No cards in deck...</em></p>
+	}
+	else
+	{
+		@foreach (MinimalAPI.Models.Card card in deck)
+		{
+			<DeckCard card="card" OnCardClicked="removeCard"></DeckCard>
+		}
+	}
+</section>
+
+@code {
+	[Parameter]
+	public IEnumerable<MinimalAPI.Models.Card>? deck { get; set; }
+	[Parameter]
+	public EventCallback<MinimalAPI.Models.Card> OnCardClicked { get; set; }
+	private async void removeCard(MinimalAPI.Models.Card card)
+	{
+		logger.LogInformation($"Card removed from deck: {card.Id}");
+		await OnCardClicked.InvokeAsync(card);
+	}
+}

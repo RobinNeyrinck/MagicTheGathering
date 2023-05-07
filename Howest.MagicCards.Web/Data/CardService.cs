@@ -3,7 +3,7 @@ using Howest.MagicCards.WebAPI.Wrappers;
 
 namespace Howest.MagicCards.Web.Data;
 
-public class CardService
+public class CardService : ICardService
 {
 	private readonly HttpClient _httpClient;
 	private readonly JsonSerializerOptions _jsonOptions;

@@ -4,27 +4,45 @@ namespace Howest.MagicCards.Web.Pages;
 
 partial class DeckBuilder
 {
-    private string title = "DeckBuilder";
-    private IEnumerable<CardDTO>? cards = null;
-    private IEnumerable<SetDTO>? sets = null;
-    private IEnumerable<RarityDTO>? rarities = null;
-    private IEnumerable<TypeDTO>? types = null;
+    private string _title = "DeckBuilder";
+    private IEnumerable<CardDTO>? _cards = null;
+    private IEnumerable<SetDTO>? _sets = null;
+    private IEnumerable<RarityDTO>? _rarities = null;
+    private IEnumerable<TypeDTO>? _types = null;
+    private IEnumerable<MinimalAPI.Models.Card>? _deck = null;
 
     protected override async Task OnInitializedAsync()
     {
-        cards = await _cardRepository.GetCardsAsync();
-        sets = await _cardRepository.GetSetsAsync();
-        rarities = await _cardRepository.GetRaritiesAsync();
-        types = await _cardRepository.GetTypesAsync();
+        _cards = await _cardRepository.GetCardsAsync();
+        _sets = await _cardRepository.GetSetsAsync();
+        _rarities = await _cardRepository.GetRaritiesAsync();
+        _types = await _cardRepository.GetTypesAsync();
+        _deck = await _deckRepository.GetDeckAsync();
     }
 
     protected async void UpdateCards(CardFilterArgs args)
     {
-        cards = await _cardRepository.Filter(args);
+        _cards = await _cardRepository.Filter(args);
     }
 
     protected async void SortCards(bool ascending)
     {
-        cards = await _cardRepository.Sort(ascending);
+        _cards = await _cardRepository.Sort(ascending);
     }
+
+    protected async Task RemoveCardAsync(MinimalAPI.Models.Card card)
+    {
+		await _deckRepository.RemoveCard(card);
+        _deck = await _deckRepository.GetDeckAsync();
+	}
+
+    protected void AddCardToDeck(CardDTO card)
+    {
+		MinimalAPI.Models.Card deckCard = new()
+        {
+            Name = card.Name,
+            Amount = 1
+        };
+        _deckRepository.AddCard(deckCard);
+	}
 }

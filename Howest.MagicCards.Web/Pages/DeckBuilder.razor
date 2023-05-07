@@ -1,6 +1,7 @@
 ﻿@page "/deckbuilder"
 
-@inject CardService _cardRepository
+@inject ICardService _cardRepository
+@inject IDeckService _deckRepository
 @inject IMapper _mapper
 
 <PageTitle>DeckBuilder</PageTitle>
@@ -10,14 +11,15 @@
 </header>
 
 <main>
-	<CardFilter sets="@sets" rarities="@rarities" types="@types" OnFilterChanged="UpdateCards" OnSortChanged="SortCards"></CardFilter>
-	<div class="container">
-		<div id="cards">
-			<CardList cards="@cards"></CardList>
+	<div class="d-flex flex-row">
+		<div style="flex-basis:75%">
+			<CardFilter sets="@_sets" rarities="@_rarities" types="@_types" OnFilterChanged="UpdateCards" OnSortChanged="SortCards"></CardFilter>
+			<CardList cards="@_cards"></CardList>
 		</div>
-		<div id="deck">
-			<!-- TODO: figure out strategy of displaying deck -->
+		<div style="flex-basis:25%; border-left: 1px solid black; margin-left: 1rem; padding-left:0.5rem;">
+			<h4>Deck</h4>
+			<DeckList deck="@_deck" OnCardClicked="RemoveCardAsync"></DeckList>
 		</div>
-		<PageFilter></PageFilter>
 	</div>
+	<PageFilter></PageFilter>
 </main>

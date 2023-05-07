@@ -19,8 +19,9 @@
 	
 	<ItemGroup>
 		<ProjectReference Include="..\Howest.Magic.DAL\Howest.MagicCards.DAL.csproj" />
-		<ProjectReference Include="..\Howest.Magic.WebAPI\Howest.MagicCards.WebAPI.csproj" />
 		<ProjectReference Include="..\Howest.MagicCards.Shared\Howest.MagicCards.Shared.csproj" />
+		<ProjectReference Include="..\Howest.Magic.WebAPI\Howest.MagicCards.WebAPI.csproj" />
+		<ProjectReference Include="..\Howest.MagicCards.MinimalAPI\Howest.MagicCards.MinimalAPI.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -31,5 +32,6 @@
 		<Using Include="Howest.MagicCards.Shared.Mappings" />
 		<Using Include="Howest.MagicCards.Web.Data" />
 		<Using Include="Howest.MagicCards.Web.Components" />
+		<Using Include="Howest.MagicCards.MinimalAPI.Models"/>
 	</ItemGroup>
 </Project>
