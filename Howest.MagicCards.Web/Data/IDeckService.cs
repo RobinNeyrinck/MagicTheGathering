@@ -1,10 +1,12 @@
-﻿namespace Howest.MagicCards.Web.Data
+﻿using Card = Howest.MagicCards.MinimalAPI.Models.Card;
+
+namespace Howest.MagicCards.Web.Data
 {
 	public interface IDeckService
 	{
-		void AddCard(MinimalAPI.Models.Card card);
-		Task<IEnumerable<MinimalAPI.Models.Card>> GetDeckAsync();
-		Task RemoveCard(MinimalAPI.Models.Card card);
-		Task UpdateCard(MinimalAPI.Models.Card card);
+		void AddCard(Card card);
+		Task<IEnumerable<Card>> GetDeckAsync();
+		Task<bool> RemoveCard(Card card);
+		Task UpdateCard(Card card);
 	}
 }

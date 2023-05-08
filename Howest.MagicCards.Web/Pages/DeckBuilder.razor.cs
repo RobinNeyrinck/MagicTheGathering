@@ -32,8 +32,11 @@ partial class DeckBuilder
 
     protected async Task RemoveCardAsync(MinimalAPI.Models.Card card)
     {
-		await _deckRepository.RemoveCard(card);
-        _deck = await _deckRepository.GetDeckAsync();
+		bool result = await _deckRepository.RemoveCard(card);
+        if (result)
+        {
+			_deck = await _deckRepository.GetDeckAsync();
+		}
 	}
 
     protected void AddCardToDeck(CardDTO card)
