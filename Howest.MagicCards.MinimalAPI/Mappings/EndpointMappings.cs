@@ -49,5 +49,12 @@ public static class EndpointMappings
             return Results.Ok();
         })
             .WithTags("CardDeck");
+
+        app.MapDelete($"{urlPrefix}/all", (ICardDeckService service) =>
+        {
+            service.RemoveAll();
+            return Results.Ok();
+        })
+            .WithTags("CardDeck");
     }
 }

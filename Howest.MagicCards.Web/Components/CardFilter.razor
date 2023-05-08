@@ -38,7 +38,7 @@ else
 			})
 		</select>
 		<button id="sortbyname" class="btn-secondary" type="button" @onclick="@sort" @onclick:preventDefault>Name</button>
-		<input type="submit" placeholder="Submit" class="btn-primary" @onclick="@onPost" @onclick:preventDefault />
+		<input type="submit" placeholder="Submit" class="btn-primary" @onclick="@onFilter" @onclick:preventDefault />
 	</form>
 }
 
@@ -60,7 +60,7 @@ else
 	private string Rarity { get; set; }
 	private string Type { get; set; }
 
-	public async void onPost()
+	public async void onFilter()
 	{
 		CardFilterArgs filterArgs = new CardFilterArgs
 			{

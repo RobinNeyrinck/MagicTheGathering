@@ -35,4 +35,9 @@ public class CardDeckService : ICardDeckService
     {
         _cardDeck.ReplaceOne(card => card.Id == id, card);
     }
+
+    public void RemoveAll()
+    {
+        _cardDeck.DeleteMany(card => true);
+    }
 }
