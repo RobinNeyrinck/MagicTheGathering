@@ -50,7 +50,7 @@ partial class DeckBuilder
         bool result = await _deckRepository.AddCard(deckCard);
         if (result)
         {
-            _cards = await _cardRepository.GetCardsAsync();
+            _deck = await _deckRepository.GetDeckAsync();
         }
 	}
 }

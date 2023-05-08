@@ -1,4 +1,4 @@
-@inject NavigationManager navigationManager
+@inject NavigationManager navigationManager;
 
 <article class="border p-3 m-3 d-flex flex-column justify-content-between" style="flex-basis: 25%">
 	<div>
@@ -12,7 +12,7 @@
 			<p>@card.Rarity</p>
 		</div>
 		<button @onclick="(() => showDetailedCard(card.Id))" @onclick:preventDefault class="align-self-end">View Details!</button>
-		<button @onclick:preventDefault>Add to deck!</button>
+		<button @onclick="(() => addCardToDeck(card))" @onclick:preventDefault>Add to deck!</button>
 	</div>
 </article>
 
@@ -25,5 +25,10 @@
 	private void showDetailedCard(long cardId)
 	{
 		navigationManager.NavigateTo($"/cards/{cardId}");
+	}
+
+	private async void addCardToDeck(CardDTO card)
+	{
+		await OnCardClicked.InvokeAsync(card);
 	}
 }
