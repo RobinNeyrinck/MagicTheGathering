@@ -55,7 +55,7 @@ public class DeckService : IDeckService
 		string name = card.Name.Replace(" ", "%20");
 		HttpResponseMessage response = await _client.GetAsync($"card?name={name}");
 
-		if (!response.IsSuccessStatusCode)
+		if (await GetCardFromResponse(response) == null)
 		{
 			string json = JsonSerializer.Serialize(card);
 			StringContent data = new StringContent(json, Encoding.UTF8, "application/json");
@@ -96,7 +96,7 @@ public class DeckService : IDeckService
 
 	private async Task<bool> DeleteCard(string cardId)
 	{
-		HttpResponseMessage deleteResponse = await _client.DeleteAsync($"card/{cardId}");
+		HttpResponseMessage deleteResponse = await _client.DeleteAsync($"cards?id={cardId}");
 		if (!deleteResponse.IsSuccessStatusCode)
 			throw new Exception("Could not delete card");
 
