@@ -4,7 +4,7 @@ namespace Howest.MagicCards.Web.Pages;
 
 partial class DeckBuilder
 {
-    private string _title = "DeckBuilder";
+    private readonly string _title = "DeckBuilder";
     private IEnumerable<CardDTO>? _cards = null;
     private IEnumerable<SetDTO>? _sets = null;
     private IEnumerable<RarityDTO>? _rarities = null;
@@ -39,13 +39,18 @@ partial class DeckBuilder
 		}
 	}
 
-    protected void AddCardToDeck(CardDTO card)
+    protected async Task AddCardToDeckAsync(CardDTO card)
     {
 		MinimalAPI.Models.Card deckCard = new()
         {
             Name = card.Name,
             Amount = 1
         };
-        _deckRepository.AddCard(deckCard);
+        
+        bool result = await _deckRepository.AddCard(deckCard);
+        if (result)
+        {
+            _cards = await _cardRepository.GetCardsAsync();
+        }
 	}
 }

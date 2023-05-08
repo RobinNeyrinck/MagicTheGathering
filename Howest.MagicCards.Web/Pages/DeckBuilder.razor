@@ -14,7 +14,7 @@
 	<div class="d-flex flex-row">
 		<div style="flex-basis:75%">
 			<CardFilter sets="@_sets" rarities="@_rarities" types="@_types" OnFilterChanged="UpdateCards" OnSortChanged="SortCards"></CardFilter>
-			<CardList cards="@_cards"></CardList>
+			<CardList cards="@_cards" OnCardClicked="AddCardToDeckAsync"></CardList>
 		</div>
 		<div style="flex-basis:25%; border-left: 1px solid black; margin-left: 1rem; padding-left:0.5rem;">
 			<h4>Deck</h4>

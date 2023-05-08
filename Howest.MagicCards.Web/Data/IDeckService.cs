@@ -4,9 +4,8 @@ namespace Howest.MagicCards.Web.Data
 {
 	public interface IDeckService
 	{
-		void AddCard(Card card);
+		Task<bool> AddCard(Card card);
 		Task<IEnumerable<Card>> GetDeckAsync();
 		Task<bool> RemoveCard(Card card);
-		Task UpdateCard(Card card);
 	}
 }

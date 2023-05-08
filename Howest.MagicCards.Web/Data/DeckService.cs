@@ -36,54 +36,69 @@ public class DeckService : IDeckService
 
 	public async Task<bool> RemoveCard(Card card)
 	{
-		HttpResponseMessage existingCard = await _client.GetAsync($"card?name={card.Name}");
-		if (existingCard.IsSuccessStatusCode)
-		{
-			string content = await existingCard.Content.ReadAsStringAsync();
-			Card existingCardObject = JsonSerializer.Deserialize<Card>(content, _jsonOptions);
-			if (existingCardObject.Amount > 1)
-			{
-				existingCardObject.Amount--;
-				string json = JsonSerializer.Serialize(existingCardObject);
-				StringContent data = new StringContent(json, Encoding.UTF8, "application/json");
-				HttpResponseMessage response = await _client.PutAsync("cards", data);
-				if (response.IsSuccessStatusCode)
-				{
-					return true;
-				}
-				else
-				{
-					throw new Exception("Could not update card");
-				}
-			}
-			else
-			{
-				HttpResponseMessage response = await _client.DeleteAsync($"card/{card.Id}");
-				if (response.IsSuccessStatusCode)
-				{
-					return true;
-				}
-				else
-				{
-					throw new Exception("Could not delete card");
-				}
-			}
+		HttpResponseMessage existingCardResponse = await _client.GetAsync($"card?name={card.Name}");
 
-		}
-		else
-		{
+		if (!existingCardResponse.IsSuccessStatusCode)
 			throw new Exception("Card does not exist");
+
+		Card existingCardObject = await GetCardFromResponse(existingCardResponse);
+
+		if (existingCardObject.Amount > 1)
+			return await UpdateCardAmount(existingCardObject, -1);
+		else
+			return await DeleteCard(card.Id);
+	}
+
+	public async Task<bool> AddCard(Card card)
+	{
+		HttpResponseMessage response = await _client.GetAsync($"card/name={card.Name}");
+
+		if (!response.IsSuccessStatusCode)
+		{
+			string json = JsonSerializer.Serialize(card);
+			StringContent data = new StringContent(json, Encoding.UTF8, "application/json");
+
+			HttpResponseMessage postResponse = await _client.PostAsync("cards", data);
+			if (!postResponse.IsSuccessStatusCode)
+				throw new Exception("Could not add card");
+			else
+				return true;
+		} else
+		{
+			Card returnedCard = await GetCardFromResponse(response);
+			return await UpdateCardAmount(returnedCard, 1);
 		}
 	}
 
-	public void AddCard(Card card)
+	#region Help functions
+
+	private async Task<Card> GetCardFromResponse(HttpResponseMessage response)
 	{
-		// TODO: Add card to deck
-		// TODO: Check if card already exists in deck
+		string content = await response.Content.ReadAsStringAsync();
+		return JsonSerializer.Deserialize<Card>(content, _jsonOptions);
 	}
 
-	public Task UpdateCard(MinimalAPI.Models.Card card)
+	private async Task<bool> UpdateCardAmount(Card card, int amountChange)
 	{
-		throw new NotImplementedException();
+		card.Amount += amountChange;
+		string json = JsonSerializer.Serialize(card);
+		StringContent data = new StringContent(json, Encoding.UTF8, "application/json");
+
+		HttpResponseMessage updateResponse = await _client.PutAsync("cards", data);
+		if (!updateResponse.IsSuccessStatusCode)
+			throw new Exception("Could not update card");
+
+		return true;
 	}
+
+
+	private async Task<bool> DeleteCard(string cardId)
+	{
+		HttpResponseMessage deleteResponse = await _client.DeleteAsync($"card/{cardId}");
+		if (!deleteResponse.IsSuccessStatusCode)
+			throw new Exception("Could not delete card");
+
+		return true;
+	}
+	#endregion
 }
