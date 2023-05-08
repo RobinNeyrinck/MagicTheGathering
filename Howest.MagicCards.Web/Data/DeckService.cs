@@ -72,6 +72,14 @@ public class DeckService : IDeckService
 		}
 	}
 
+	public async Task<bool> ClearDeck()
+	{
+        HttpResponseMessage response = await _client.DeleteAsync("all");
+        if (!response.IsSuccessStatusCode)
+            throw new Exception("Could not clear deck");
+        return true;
+    }
+
 	#region Help functions
 
 	private async Task<Card> GetCardFromResponse(HttpResponseMessage response)

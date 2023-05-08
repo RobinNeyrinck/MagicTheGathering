@@ -30,7 +30,7 @@ partial class DeckBuilder
         _cards = await _cardRepository.Sort(ascending);
     }
 
-    protected async Task RemoveCardAsync(MinimalAPI.Models.Card card)
+    protected async void RemoveCardAsync(MinimalAPI.Models.Card card)
     {
 		bool result = await _deckRepository.RemoveCard(card);
         if (result)
@@ -39,7 +39,7 @@ partial class DeckBuilder
 		}
 	}
 
-    protected async Task AddCardToDeckAsync(CardDTO card)
+    protected async void AddCardToDeckAsync(CardDTO card)
     {
 		MinimalAPI.Models.Card deckCard = new()
         {
@@ -53,4 +53,13 @@ partial class DeckBuilder
             _deck = await _deckRepository.GetDeckAsync();
         }
 	}
+
+    protected async void ClearDeck()
+    {
+        bool result = await _deckRepository.ClearDeck();
+        if (result)
+        {
+            _deck = await _deckRepository.GetDeckAsync();
+        }
+    }
 }

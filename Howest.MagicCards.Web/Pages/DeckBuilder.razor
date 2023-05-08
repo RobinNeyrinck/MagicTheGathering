@@ -17,7 +17,10 @@
 			<CardList cards="@_cards" OnCardClicked="AddCardToDeckAsync"></CardList>
 		</div>
 		<div style="flex-basis:25%; border-left: 1px solid black; margin-left: 1rem; padding-left:0.5rem;">
-			<h4>Deck</h4>
+			<div class="d-flex justify-content-between">
+				<h4>Deck</h4>
+				<button class="btn btn-primary" @onclick="ClearDeck" @onclick:preventDefault>Clear</button>
+			</div>
 			<DeckList deck="@_deck" OnCardClicked="RemoveCardAsync"></DeckList>
 		</div>
 	</div>
