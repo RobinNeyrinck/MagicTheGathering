@@ -1,5 +1,5 @@
 <section>
-	@if (@deck == null)
+	@if (@deck == null || deck.Count() == 0)
 	{
 		<p class="w-100 text-center"><em>No cards in deck...</em></p>
 	}

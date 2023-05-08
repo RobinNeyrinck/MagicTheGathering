@@ -35,10 +35,11 @@ public class DeckService : IDeckService
 	}
 
 	public async Task<bool> RemoveCard(Card card)
-	{
-		HttpResponseMessage existingCardResponse = await _client.GetAsync($"card?name={card.Name}");
+    {
+        string name = card.Name.Replace(" ", "%20");
+        HttpResponseMessage existingCardResponse = await _client.GetAsync($"card?name={name}");
 
-		if (!existingCardResponse.IsSuccessStatusCode)
+        if (!existingCardResponse.IsSuccessStatusCode)
 			throw new Exception("Card does not exist");
 
 		Card existingCardObject = await GetCardFromResponse(existingCardResponse);
@@ -51,7 +52,8 @@ public class DeckService : IDeckService
 
 	public async Task<bool> AddCard(Card card)
 	{
-		HttpResponseMessage response = await _client.GetAsync($"card/name={card.Name}");
+		string name = card.Name.Replace(" ", "%20");
+		HttpResponseMessage response = await _client.GetAsync($"card?name={name}");
 
 		if (!response.IsSuccessStatusCode)
 		{
