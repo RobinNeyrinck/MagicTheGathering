@@ -1,6 +1,6 @@
 @inject NavigationManager navigationManager;
 
-<article class="border p-3 m-3 d-flex flex-column justify-content-between" style="flex-basis: 25%">
+<article class="border p-3 m-3 d-flex flex-column justify-content-between" style="flex-basis: 25%" @onclick="(() => addCardToDeck(card))" @onclick:preventDefault>
 	<div>
 		<h3>@card.Name</h3>
 		<p class="fw-bold">@card.ArtistName</p>
@@ -12,7 +12,7 @@
 			<p>@card.Rarity</p>
 		</div>
 		<button @onclick="(() => showDetailedCard(card.Id))" @onclick:preventDefault class="align-self-end">View Details!</button>
-		<button @onclick="(() => addCardToDeck(card))" @onclick:preventDefault>Add to deck!</button>
+		<button >Add to deck!</button>
 	</div>
 </article>
 

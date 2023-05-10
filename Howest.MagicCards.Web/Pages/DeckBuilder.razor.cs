@@ -1,6 +1,4 @@
-﻿using static Howest.MagicCards.Web.Data.CardService;
-
-namespace Howest.MagicCards.Web.Pages;
+﻿namespace Howest.MagicCards.Web.Pages;
 
 partial class DeckBuilder
 {
@@ -20,7 +18,7 @@ partial class DeckBuilder
         _deck = await _deckRepository.GetDeckAsync();
     }
 
-    protected async void UpdateCards(CardFilterArgs args)
+    protected async void UpdateCards(CardService.CardFilterArgs args)
     {
         _cards = await _cardRepository.Filter(args);
     }
@@ -52,6 +50,15 @@ partial class DeckBuilder
         {
             _deck = await _deckRepository.GetDeckAsync();
         }
+	}
+
+    protected async void AddAnotherCardToDeckAsync(MinimalAPI.Models.Card card)
+    {
+		bool result = await _deckRepository.AddCard(card);
+		if (result)
+        {
+			_deck = await _deckRepository.GetDeckAsync();
+		}
 	}
 
     protected async void ClearDeck()

@@ -7,7 +7,7 @@
 	{
 		@foreach (MinimalAPI.Models.Card card in deck)
 		{
-			<DeckCard card="card" OnCardClicked="removeCard"></DeckCard>
+			<DeckCard card="card" OnNameClicked="removeCard" OnNumberClicked="addAnother"></DeckCard>
 		}
 	}
 </section>
@@ -16,9 +16,16 @@
 	[Parameter]
 	public IEnumerable<MinimalAPI.Models.Card>? deck { get; set; }
 	[Parameter]
-	public EventCallback<MinimalAPI.Models.Card> OnCardClicked { get; set; }
+	public EventCallback<MinimalAPI.Models.Card> OnNameClicked { get; set; }
+	[Parameter]
+	public EventCallback<MinimalAPI.Models.Card> OnNumberClicked { get; set; }
 	private async void removeCard(MinimalAPI.Models.Card card)
 	{
-		await OnCardClicked.InvokeAsync(card);
+		await OnNameClicked.InvokeAsync(card);
+	}
+
+	private async void addAnother(MinimalAPI.Models.Card card)
+	{
+		await OnNumberClicked.InvokeAsync(card);
 	}
 }
