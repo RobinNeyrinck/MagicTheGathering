@@ -2,71 +2,84 @@
 
 partial class DeckBuilder
 {
-    private readonly string _title = "DeckBuilder";
-    private IEnumerable<CardDTO>? _cards = null;
-    private IEnumerable<SetDTO>? _sets = null;
-    private IEnumerable<RarityDTO>? _rarities = null;
-    private IEnumerable<TypeDTO>? _types = null;
-    private IEnumerable<MinimalAPI.Models.Card>? _deck = null;
+	private readonly string _title = "DeckBuilder";
+	private IEnumerable<CardDTO>? _cards;
+	private IEnumerable<SetDTO>? _sets;
+	private IEnumerable<RarityDTO>? _rarities;
+	private IEnumerable<TypeDTO>? _types;
+	private IEnumerable<MinimalAPI.Models.Card>? _deck;
 
-    protected override async Task OnInitializedAsync()
-    {
-        _cards = await _cardRepository.GetCardsAsync();
-        _sets = await _cardRepository.GetSetsAsync();
-        _rarities = await _cardRepository.GetRaritiesAsync();
-        _types = await _cardRepository.GetTypesAsync();
-        _deck = await _deckRepository.GetDeckAsync();
-    }
+	protected override async Task OnInitializedAsync()
+	{
+		await LoadDataAsync();
+	}
 
-    protected async void UpdateCards(CardService.CardFilterArgs args)
-    {
-        _cards = await _cardRepository.Filter(args);
-    }
+	protected async Task UpdateCardsAsync(CardService.CardFilterArgs args)
+	{
+		_cards = await _cardRepository.Filter(args);
+		StateHasChanged();
+	}
 
-    protected async void SortCards(bool ascending)
-    {
-        _cards = await _cardRepository.Sort(ascending);
-    }
+	protected async Task SortCardsAsync(bool ascending)
+	{
+		_cards = await _cardRepository.Sort(ascending);
+		StateHasChanged();
+	}
 
-    protected async void RemoveCardAsync(MinimalAPI.Models.Card card)
-    {
+	protected async Task RemoveCardAsync(MinimalAPI.Models.Card card)
+	{
 		bool result = await _deckRepository.RemoveCard(card);
-        if (result)
-        {
-			_deck = await _deckRepository.GetDeckAsync();
+		if (result)
+		{
+			await RefreshDeckAsync();
 		}
 	}
 
-    protected async void AddCardToDeckAsync(CardDTO card)
-    {
+	protected async Task AddCardToDeckAsync(CardDTO card)
+	{
 		MinimalAPI.Models.Card deckCard = new()
-        {
-            Name = card.Name,
-            Amount = 1
-        };
-        
-        bool result = await _deckRepository.AddCard(deckCard);
-        if (result)
-        {
-            _deck = await _deckRepository.GetDeckAsync();
-        }
+		{
+			Name = card.Name,
+			Amount = 1
+		};
+
+		bool result = await _deckRepository.AddCard(deckCard);
+		if (result)
+		{
+			await RefreshDeckAsync();
+		}
 	}
 
-    protected async void AddAnotherCardToDeckAsync(MinimalAPI.Models.Card card)
-    {
+	protected async Task AddAnotherCardToDeckAsync(MinimalAPI.Models.Card card)
+	{
 		bool result = await _deckRepository.AddCard(card);
 		if (result)
-        {
-			_deck = await _deckRepository.GetDeckAsync();
+		{
+			await RefreshDeckAsync();
 		}
 	}
 
-    protected async void ClearDeck()
-    {
-        bool result = await _deckRepository.ClearDeck();
-        if (result)
-        {
-            _deck = await _deckRepository.GetDeckAsync();
-        }
-    }
+	protected async Task ClearDeckAsync()
+	{
+		bool result = await _deckRepository.ClearDeck();
+		if (result)
+		{
+			await RefreshDeckAsync();
+		}
+	}
+
+	private async Task LoadDataAsync()
+	{
+		_cards = await _cardRepository.GetCardsAsync();
+		_sets = await _cardRepository.GetSetsAsync();
+		_rarities = await _cardRepository.GetRaritiesAsync();
+		_types = await _cardRepository.GetTypesAsync();
+		await RefreshDeckAsync();
+	}
+
+	private async Task RefreshDeckAsync()
+	{
+		_deck = await _deckRepository.GetDeckAsync();
+		StateHasChanged();
+	}
 }

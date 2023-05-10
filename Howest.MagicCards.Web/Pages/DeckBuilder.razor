@@ -13,13 +13,13 @@
 <main>
 	<div class="d-flex flex-row">
 		<div style="flex-basis:75%">
-			<CardFilter sets="@_sets" rarities="@_rarities" types="@_types" OnFilterChanged="UpdateCards" OnSortChanged="SortCards"></CardFilter>
+			<CardFilter sets="@_sets" rarities="@_rarities" types="@_types" OnFilterChanged="UpdateCardsAsync" OnSortChanged="SortCardsAsync"></CardFilter>
 			<CardList cards="@_cards" OnCardClicked="AddCardToDeckAsync"></CardList>
 		</div>
 		<div style="flex-basis:25%; border-left: 1px solid black; margin-left: 1rem; padding-left:0.5rem;">
 			<div class="d-flex justify-content-between">
 				<h4>Deck</h4>
-				<button class="btn btn-primary" @onclick="(() => ClearDeck())" @onclick:preventDefault>Clear</button>
+				<button class="btn btn-primary" @onclick="(() => ClearDeckAsync())" @onclick:preventDefault>Clear</button>
 			</div>
 			<DeckList deck="@_deck" OnNameClicked="RemoveCardAsync" OnNumberClicked="AddAnotherCardToDeckAsync"></DeckList>
 		</div>
