@@ -52,7 +52,22 @@ public class DeckService : IDeckService
 
 	public async Task<bool> AddCard(Card card)
 	{
-		string name = card.Name.Replace(" ", "%20");
+		HttpResponseMessage generalResponse = await _client.GetAsync($"cards");
+		if (generalResponse.IsSuccessStatusCode)
+		{
+			string content = await generalResponse.Content.ReadAsStringAsync();
+			IEnumerable<Card> cards = JsonSerializer.Deserialize<IEnumerable<Card>>(content, _jsonOptions);
+			int result = 0;
+			foreach (Card cardAmount in cards)
+			{
+				result += cardAmount.Amount;
+			}
+			if (result > 61)
+			{
+				throw new Exception("Deck is full");
+			}
+		}
+			string name = card.Name.Replace(" ", "%20");
 		HttpResponseMessage response = await _client.GetAsync($"card?name={name}");
 
 		if (await GetCardFromResponse(response) == null)
