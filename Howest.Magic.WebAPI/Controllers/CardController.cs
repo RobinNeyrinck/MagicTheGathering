@@ -292,7 +292,7 @@ public class CardController : ControllerBase
 		return (cachedResult is IEnumerable<CardDetailDTO> allCards)
 			? Ok(
 			new PagedResponse<IEnumerable<CardDetailDTO>>(
-					cachedResult,
+					allCards,
 					filter.PageNumber,
 					filter.PageSize
 				  )
@@ -332,13 +332,13 @@ public class CardController : ControllerBase
 		catch (Exception ex)
 		{
 			return StatusCode(
-							   StatusCodes.Status500InternalServerError,
-											  new Response<CardDetailDTO>
-											  {
-												  Succeeded = false,
-												  Errors = new[] { ex.Message },
-												  Message = $"Error while retrieving card with id: {id}"
-											  });
+				StatusCodes.Status500InternalServerError,
+				new Response<CardDetailDTO>
+				{
+					Succeeded = false,
+					Errors = new[] { ex.Message },
+					Message = $"Error while retrieving card with id: {id}"
+				});
 		}
 
 	}

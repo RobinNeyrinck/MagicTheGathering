@@ -114,7 +114,7 @@ public class CardService : ICardService
 			["Text"] = filter.Text,
 			["Set"] = filter.Set,
 			["Rarity"] = filter.Rarity,
-			//["type"] = filter.Type
+			["type"] = filter.Type
 		};
 
 		string queryString = string.Join("&", queryParams

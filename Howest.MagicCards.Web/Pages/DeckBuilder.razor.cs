@@ -6,7 +6,7 @@ partial class DeckBuilder
 	private IEnumerable<SetDTO>? _sets;
 	private IEnumerable<RarityDTO>? _rarities;
 	private IEnumerable<TypeDTO>? _types;
-	private IEnumerable<MinimalAPI.Models.Card>? _deck;
+	private IEnumerable<Card>? _deck;
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -49,7 +49,7 @@ partial class DeckBuilder
 		}
 	}
 
-	protected async Task AddAnotherCardToDeckAsync(MinimalAPI.Models.Card card)
+	protected async Task AddAnotherCardToDeckAsync(Card card)
 	{
 		bool result = await _deckRepository.AddCard(card);
 		if (result)
