@@ -28,6 +28,8 @@
 		<Using Include="MongoDB.Driver" />
 		<Using Include="MongoDB.Bson" />
 		<Using Include="MongoDB.Bson.Serialization.Attributes"/>
+		<Using Include="Microsoft.Extensions.Options"/>
+		<Using Include="Microsoft.AspNetCore.Mvc"/>
 	</ItemGroup>
 
 </Project>

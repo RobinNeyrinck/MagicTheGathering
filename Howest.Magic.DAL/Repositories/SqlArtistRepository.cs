@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace Howest.MagicCards.DAL.Repositories;
+﻿namespace Howest.MagicCards.DAL.Repositories;
 
 public class SqlArtistRepository : IArtistRepository
 {

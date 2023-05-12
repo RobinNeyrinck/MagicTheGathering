@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-
-#nullable disable
+﻿#nullable disable
 
 namespace Howest.MagicCards.DAL.Models
 {
-    public partial class PersonalAccessToken
+	public partial class PersonalAccessToken
     {
         public long Id { get; set; }
         public string TokenableType { get; set; }

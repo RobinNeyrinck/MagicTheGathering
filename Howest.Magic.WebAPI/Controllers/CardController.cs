@@ -1,8 +1,4 @@
-﻿using System.Text.Json;
-using Howest.MagicCards.Shared.DTO;
-using Microsoft.Extensions.Caching.Distributed;
-
-namespace Howest.MagicCards.WebAPI.Controllers;
+﻿namespace Howest.MagicCards.WebAPI.Controllers;
 
 [ApiVersion("1.1")]
 [ApiVersion("1.5")]

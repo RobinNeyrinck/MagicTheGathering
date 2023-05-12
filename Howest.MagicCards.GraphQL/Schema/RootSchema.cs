@@ -1,6 +1,4 @@
-﻿using Howest.MagicCards.GraphQL.Query;
-
-namespace Howest.MagicCards.GraphQL.Schema;
+﻿namespace GraphQL.GraphQLTypes;
 
 public class RootSchema : Schema
 {

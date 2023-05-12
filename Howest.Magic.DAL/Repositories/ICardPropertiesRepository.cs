@@ -1,10 +1,9 @@
-﻿namespace Howest.MagicCards.DAL.Repositories
+﻿namespace Howest.MagicCards.DAL.Repositories;
+
+public interface ICardPropertiesRepository
 {
-    public interface ICardPropertiesRepository
-    {
-        IQueryable<Color> GetColors();
-        IQueryable<Rarity> GetRarities();
-        IQueryable<Set> GetSets();
-        IQueryable<Models.Type> GetTypes();
-    }
+    IQueryable<Color> GetColors();
+    IQueryable<Rarity> GetRarities();
+    IQueryable<Set> GetSets();
+    IQueryable<Models.Type> GetTypes();
 }

@@ -1,5 +1,3 @@
-using Microsoft.Extensions.Options;
-
 const string commonPrefix = "/api";
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);

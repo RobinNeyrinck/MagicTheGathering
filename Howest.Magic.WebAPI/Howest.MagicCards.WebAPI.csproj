@@ -37,6 +37,10 @@
 		<Using Include="AutoMapper" />
 		<Using Include="AutoMapper.QueryableExtensions" />
 		<Using Include="Howest.MagicCards.Shared.DTO" />
+		<Using Include="Howest.MagicCards.Shared.Mappings"/>
+		<Using Include="Microsoft.OpenApi.Models"/>
+		<Using Include="System.Text.Json"/>
+		<Using Include="Microsoft.Extensions.Caching.Distributed"/>
 	</ItemGroup>
 
 </Project>

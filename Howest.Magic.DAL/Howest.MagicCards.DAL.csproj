@@ -18,6 +18,7 @@
   </ItemGroup>
 
 	<ItemGroup>
+		<Using Include="Microsoft.EntityFrameworkCore"/>
 		<Using Include="Howest.MagicCards.DAL.Models" />
 		<Using Include="Howest.MagicCards.DAL.Repositories" />
 	</ItemGroup>

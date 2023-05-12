@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using Howest.MagicCards.WebAPI.Wrappers;
+﻿using Howest.MagicCards.WebAPI.Wrappers;
 
 namespace Howest.MagicCards.Web.Data;
 

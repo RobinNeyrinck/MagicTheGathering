@@ -1,6 +1,4 @@
-﻿using Howest.MagicCards.Shared.Filters;
-
-namespace Howest.MagicCards.GraphQL.Types;
+﻿namespace Howest.MagicCards.GraphQL.Types;
 
 public class CardFilterType : InputObjectGraphType<CardFilter>
 {

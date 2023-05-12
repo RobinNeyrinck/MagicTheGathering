@@ -1,6 +1,3 @@
-using Howest.MagicCards.DAL.Models;
-using Microsoft.EntityFrameworkCore;
-
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
 

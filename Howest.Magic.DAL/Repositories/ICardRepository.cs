@@ -1,9 +1,8 @@
-﻿namespace Howest.MagicCards.DAL.Repositories
+﻿namespace Howest.MagicCards.DAL.Repositories;
+
+public interface ICardRepository
 {
-    public interface ICardRepository
-    {
-        IQueryable<Card> GetCardById(int id);
-        IQueryable<Card> GetCards();
-        IQueryable<Card> GetCardsByArtistId(long id);
-    }
+    IQueryable<Card> GetCardById(int id);
+    IQueryable<Card> GetCards();
+    IQueryable<Card> GetCardsByArtistId(long id);
 }

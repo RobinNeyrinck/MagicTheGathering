@@ -1,6 +1,4 @@
-﻿using System.Text;
-using System.Text.Json;
-using Card = Howest.MagicCards.MinimalAPI.Models.Card;
+﻿using Card = Howest.MagicCards.MinimalAPI.Models.Card;
 
 namespace Howest.MagicCards.Web.Data;
 

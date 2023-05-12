@@ -1,12 +1,8 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
-
-#nullable disable
+﻿#nullable disable
 
 namespace Howest.MagicCards.DAL.Models
 {
-    public partial class mtg_v1Context : DbContext
+	public partial class mtg_v1Context : DbContext
     {
         public mtg_v1Context()
         {

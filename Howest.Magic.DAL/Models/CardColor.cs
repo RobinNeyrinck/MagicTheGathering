@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-
-#nullable disable
+﻿#nullable disable
 
 namespace Howest.MagicCards.DAL.Models
 {
-    public partial class CardColor
+	public partial class CardColor
     {
         public long CardId { get; set; }
         public long ColorId { get; set; }

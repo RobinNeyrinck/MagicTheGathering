@@ -2,7 +2,6 @@
 
 partial class DeckBuilder
 {
-	private readonly string _title = "DeckBuilder";
 	private IEnumerable<CardDTO>? _cards;
 	private IEnumerable<SetDTO>? _sets;
 	private IEnumerable<RarityDTO>? _rarities;

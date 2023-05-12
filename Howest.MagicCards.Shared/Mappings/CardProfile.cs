@@ -1,6 +1,4 @@
-﻿using Howest.MagicCards.Shared.DTO;
-
-namespace Howest.MagicCards.Shared.Mappings;
+﻿namespace Howest.MagicCards.Shared.Mappings;
 
 public class CardProfile : Profile
 {

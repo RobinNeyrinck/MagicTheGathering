@@ -1,7 +1,4 @@
-﻿using System.Xml.Linq;
-using Microsoft.AspNetCore.Mvc;
-
-namespace Howest.MagicCards.MinimalAPI.Mappings;
+﻿namespace Howest.MagicCards.MinimalAPI.Mappings;
 
 public static class EndpointMappings
 {

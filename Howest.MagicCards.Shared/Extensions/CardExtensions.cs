@@ -1,11 +1,4 @@
-﻿using System.Reflection;
-using System.Linq.Dynamic.Core;
-using System.Text;
-using Howest.MagicCards.Shared.Filters;
-using Microsoft.Extensions.Logging;
-using System.Net.NetworkInformation;
-
-namespace Howest.MagicCards.Shared.Extensions;
+﻿namespace Howest.MagicCards.Shared.Extensions;
 
 public static class CardExtensions
 {

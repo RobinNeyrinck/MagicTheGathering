@@ -26,6 +26,8 @@
 		<Using Include="Howest.MagicCards.DAL.Models" />
 		<Using Include="Howest.MagicCards.Shared.DTO" />
 		<Using Include="AutoMapper" />
+		<Using Include="System.Linq.Dynamic.Core"/>
+		<Using Include="Howest.MagicCards.Shared.Filters"/>
 	</ItemGroup>
 
 </Project>

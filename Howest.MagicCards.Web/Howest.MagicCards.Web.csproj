@@ -33,5 +33,10 @@
 		<Using Include="Howest.MagicCards.Web.Data" />
 		<Using Include="Howest.MagicCards.Web.Components" />
 		<Using Include="Howest.MagicCards.MinimalAPI.Models"/>
+		<Using Include="Howest.MagicCards.MinimalAPI.Models.Card"/>
+		<Using Include="Howest.MagicCards.DAL.Models"/>
+		<Using Include="Microsoft.EntityFrameworkCore"/>
+		<Using Include="System.Text"/>
+		<Using Include="System.Text.Json"/>
 	</ItemGroup>
 </Project>

@@ -1,7 +1,4 @@
-﻿using Howest.MagicCards.GraphQL.Types;
-using Howest.MagicCards.Shared.Filters;
-
-namespace Howest.MagicCards.GraphQL.Query;
+﻿namespace Howest.MagicCards.GraphQL.Query;
 
 public class RootQuery : ObjectGraphType
 {
@@ -10,7 +7,7 @@ public class RootQuery : ObjectGraphType
 		Name = "Query";
 		#region Card
 
-		Field<ListGraphType<CardType>>(
+		Field<ListGraphType<Types.CardType>>(
 					   "cards",
 						  Description = "Get all cards",
 						  arguments: new QueryArguments(
