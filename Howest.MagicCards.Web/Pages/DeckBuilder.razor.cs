@@ -13,7 +13,7 @@ partial class DeckBuilder
 		await LoadDataAsync();
 	}
 
-	protected async Task UpdateCardsAsync(CardService.CardFilterArgs args)
+	protected async Task UpdateCardsAsync(CardFilterArgs args)
 	{
 		_cards = await _cardRepository.Filter(args);
 		StateHasChanged();

@@ -2,7 +2,7 @@
 
 public interface ICardService
 {
-	Task<IEnumerable<CardDTO>> Filter(CardService.CardFilterArgs filter);
+	Task<IEnumerable<CardDTO>> Filter(CardFilterArgs filter);
 	Task<CardDetailDTO> GetCardByIdAsync(long id);
 	Task<IEnumerable<CardDTO>> GetCardsAsync();
 	Task<IEnumerable<RarityDTO>> GetRaritiesAsync();

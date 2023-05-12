@@ -1,6 +1,4 @@
-﻿using Card = Howest.MagicCards.MinimalAPI.Models.Card;
-
-namespace Howest.MagicCards.Web.Data;
+﻿namespace Howest.MagicCards.Web.Data;
 
 public class DeckService : IDeckService
 {

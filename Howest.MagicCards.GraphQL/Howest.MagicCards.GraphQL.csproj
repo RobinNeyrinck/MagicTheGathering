@@ -36,7 +36,6 @@
 		<Using Include="GraphQL" />
 		<Using Include="GraphQL.GraphQLTypes" />
 		<Using Include="GraphQL.Types" />
-		<Using Include="Howest.MagicCards.GraphQL.Schema"/>
 		<Using Include="Howest.MagicCards.Shared.Filters"/>
 		<Using Include="Howest.MagicCards.GraphQL.Query"/>
 		<Using Include="Howest.MagicCards.GraphQL.Types"/>

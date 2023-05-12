@@ -1,6 +1,4 @@
-﻿using Howest.MagicCards.WebAPI.Wrappers;
-
-namespace Howest.MagicCards.Web.Data;
+﻿namespace Howest.MagicCards.Web.Data;
 
 public class CardService : ICardService
 {
@@ -33,7 +31,6 @@ public class CardService : ICardService
 		{
 			return new List<CardDTO>();
 		}
-
 	}
 
 	public async Task<CardDetailDTO> GetCardByIdAsync(long id)
@@ -171,13 +168,4 @@ public class CardService : ICardService
 	}
 
 	#endregion
-
-	public class CardFilterArgs
-	{
-		public string Name { get; set; }
-		public string Text { get; set; }
-		public string Set { get; set; }
-		public string Rarity { get; set; }
-		public string Type { get; set; }
-	}
 }
