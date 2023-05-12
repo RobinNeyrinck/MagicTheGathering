@@ -12,8 +12,7 @@ public class RootQuery : ObjectGraphType
 						  Description = "Get all cards",
 						  arguments: new QueryArguments(
 							  new QueryArgument<IntGraphType> { Name = "first" },
-							  new QueryArgument<CardFilterType> { Name = "filter" },
-							  new QueryArgument<StringGraphType> { Name = "toughness" }
+							  new QueryArgument<CardFilterType> { Name = "filter" }
 						  ),
 						  resolve: context =>
 						  {
