@@ -11,6 +11,7 @@ public class CardType : ObjectGraphType<Card>
 			"artist",
 			resolve: context => artistRepository.GetArtist(context.Source.ArtistId ?? default)
 		);
+		Field(c => c.OriginalImageUrl, type: typeof(StringGraphType)).Description("The image url of the card.").Name("image");
 		Field(c => c.ConvertedManaCost, type: typeof(StringGraphType)).Description("The mana cost of the card.").Name("cmc");
 		Field(c => c.SetCode, type: typeof(StringGraphType)).Description("The set code of the card.").Name("set");
 		Field(c => c.Power, type: typeof(StringGraphType)).Description("The power of the card.");
