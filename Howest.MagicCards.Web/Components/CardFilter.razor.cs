@@ -21,7 +21,7 @@ partial class CardFilter
 
 	public async void OnFilter()
 	{
-		CardFilterArgs filterArgs = new CardFilterArgs
+		CardFilterArgs filterArgs = new()
 		{
 			Name = Name,
 			Text = Text,
