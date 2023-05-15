@@ -39,6 +39,7 @@
 		<Using Include="System.Text" />
 		<Using Include="System.Text.Json" />
 		<Using Include="Howest.MagicCards.WebAPI.Wrappers" />
+		<Using Include="Microsoft.AspNetCore.Components"/>
 	</ItemGroup>
 
 	<ItemGroup>

@@ -1,31 +1,13 @@
 <section>
-	@if (@deck == null || deck.Count() == 0)
+	@if (Deck == null || Deck.Count() == 0)
 	{
 		<p class="w-100 text-center"><em>No cards in deck...</em></p>
 	}
 	else
 	{
-		@foreach (MongoCardDTO card in deck)
+		@foreach (MongoCardDTO card in Deck)
 		{
-			<DeckCard card="card" OnNameClicked="removeCard" OnNumberClicked="addAnother"></DeckCard>
+			<DeckCard Card="card" OnNameClicked="RemoveCard" OnNumberClicked="AddAnother"></DeckCard>
 		}
 	}
 </section>
-
-@code {
-	[Parameter]
-	public IEnumerable<MongoCardDTO>? deck { get; set; }
-	[Parameter]
-	public EventCallback<MongoCardDTO> OnNameClicked { get; set; }
-	[Parameter]
-	public EventCallback<MongoCardDTO> OnNumberClicked { get; set; }
-	private async void removeCard(MongoCardDTO card)
-	{
-		await OnNameClicked.InvokeAsync(card);
-	}
-
-	private async void addAnother(MongoCardDTO card)
-	{
-		await OnNumberClicked.InvokeAsync(card);
-	}
-}

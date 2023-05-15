@@ -1,23 +1,4 @@
 <article class="d-flex flex-row justify-content-between align-content-center flex-wrap border border-dark p-1">
-	<p style="margin: 0;" @onclick="(() => removeCard(card))">@card.Name</p>
-	<p class="fw-bold" @onclick="(() => addAnother(card) )">@card.Amount</p>
+	<p style="margin: 0;" @onclick="(() => RemoveCard(Card))">@Card.Name</p>
+	<p class="fw-bold" @onclick="(() => AddAnother(Card) )">@Card.Amount</p>
 </article>
-
-@code {
-	[Parameter]
-	public MongoCardDTO card { get; set; }
-	[Parameter]
-	public EventCallback<MongoCardDTO> OnNameClicked { get; set; }
-	[Parameter]
-	public EventCallback<MongoCardDTO> OnNumberClicked { get; set; }
-
-	private async void removeCard(MongoCardDTO card)
-	{
-		await OnNameClicked.InvokeAsync(card);
-	}
-
-	private async void addAnother(MongoCardDTO card)
-	{
-		await OnNumberClicked.InvokeAsync(card);
-	}
-}

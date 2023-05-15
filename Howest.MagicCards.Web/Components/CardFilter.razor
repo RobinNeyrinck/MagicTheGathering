@@ -1,8 +1,7 @@
-@using Microsoft.Extensions.Logging;
 @inject ILogger<CardFilter> logger;
 @inject ICardService _cardService;
 
-@if (sets == null || rarities == null || types == null)
+@if (Sets == null || Rarities == null || Types == null)
 {
 	<p class="w-100 text-center"><em>Loading...</em></p>
 }
@@ -16,7 +15,7 @@ else
 		<label for="set">Set</label>
 		<select id="set" @bind="@Set">
 			<option value="">All Sets</option>
-			@foreach (SetDTO set in sets)
+			@foreach (SetDTO set in Sets)
 			{
 				<option value="@set.Name">@set.Name</option>
 			})
@@ -24,7 +23,7 @@ else
 		<label for="rarity">Rarity</label>
 		<select id="rarity" @bind="@Rarity">
 			<option value="">All Rarities</option>
-			@foreach (RarityDTO rarity in rarities)
+			@foreach (RarityDTO rarity in Rarities)
 			{
 				<option value="@rarity.Name">@rarity.Name</option>
 			})
@@ -32,53 +31,12 @@ else
 		<label for="type">Card Type</label>
 		<select id="type" @bind="@Type">
 			<option value="">All Types</option>
-			@foreach (TypeDTO type in types)
+			@foreach (TypeDTO type in Types)
 			{
 				<option value="@type.Name">@type.Name</option>
 			})
 		</select>
-		<button id="sortbyname" class="btn-secondary" type="button" @onclick="@sort" @onclick:preventDefault>Name</button>
-		<input type="submit" placeholder="Submit" class="btn-primary" @onclick="@onFilter" @onclick:preventDefault />
+		<button id="sortbyname" class="btn-secondary" type="button" @onclick="@Sort" @onclick:preventDefault>Name</button>
+		<input type="submit" placeholder="Submit" class="btn-primary" @onclick="@OnFilter" @onclick:preventDefault />
 	</form>
-}
-
-@code {
-	[Parameter]
-	public IEnumerable<SetDTO>? sets { get; set; }
-	[Parameter]
-	public IEnumerable<RarityDTO>? rarities { get; set; }
-	[Parameter]
-	public IEnumerable<TypeDTO>? types { get; set; }
-	[Parameter]
-	public EventCallback<CardFilterArgs> OnFilterChanged { get; set; }
-	[Parameter]
-	public EventCallback<bool> OnSortChanged { get; set; }
-	private bool isAscending = false;
-	private string Name { get; set; }
-	private string Text { get; set; }
-	private string Set { get; set; }
-	private string Rarity { get; set; }
-	private string Type { get; set; }
-
-	public async void onFilter()
-	{
-		CardFilterArgs filterArgs = new CardFilterArgs
-			{
-				Name = Name,
-				Text = Text,
-				Set = Set,
-				Rarity = Rarity,
-				Type = Type
-			};
-
-		await OnFilterChanged.InvokeAsync(filterArgs);
-	}
-
-	public async void sort()
-	{
-		await OnSortChanged.InvokeAsync(isAscending);
-		isAscending = !isAscending;
-	}
-
-
 }

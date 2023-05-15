@@ -1,25 +1,13 @@
 <section class="d-flex flex-wrap m-auto justify-content-center">
-	@if (cards == null)
+	@if (Cards == null)
 	{
 		<p class="w-100 text-center"><em>Loading...</em></p>
 	}
 	else
 	{
-		@foreach (CardDTO card in cards)
+		@foreach (CardDTO card in Cards)
 		{
-			<Card card="card" OnCardClicked="addCard"></Card>
+			<Card Data="card" OnCardClicked="AddCard"></Card>
 		}
 	}
 </section>
-
-@code {
-	[Parameter]
-	public IEnumerable<CardDTO>? cards { get; set; }
-	[Parameter]
-	public EventCallback<CardDTO> OnCardClicked { get; set; }
-
-	private async void addCard(CardDTO card)
-	{
-		await OnCardClicked.InvokeAsync(card);
-	}
-}
