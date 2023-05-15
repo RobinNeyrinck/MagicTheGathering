@@ -1,12 +1,19 @@
 @inject NavigationManager navigationManager;
 
 <article class="border p-3 m-3 d-flex flex-column justify-content-between" style="flex-basis: 25%" >
-	<div @onclick="(() => addCardToDeck(card))" @onclick:preventDefault>
+	<div>
 		<div>
 			<h3>@card.Name</h3>
 			<p class="fw-bold">@card.ArtistName</p>
 		</div>
-		<p>@card.Description</p>
+		@if (card.ImageUrl == null)
+		{
+			<img src="images/placeholder.png" style="height: 310px; width: 223px;" @onclick="(() => addCardToDeck(card))" @onclick:preventDefault />
+		} else
+		{
+			<img src="@card.ImageUrl" @onclick="(() => addCardToDeck(card))" @onclick:preventDefault alt="@card.Description"/>
+		}
+		
 		<div>
 			<div class="d-flex justify-content-between">
 				<p>@card.Set</p>

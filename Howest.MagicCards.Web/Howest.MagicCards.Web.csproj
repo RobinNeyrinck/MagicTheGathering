@@ -32,12 +32,16 @@
 		<Using Include="Howest.MagicCards.Shared.Mappings" />
 		<Using Include="Howest.MagicCards.Web.Data" />
 		<Using Include="Howest.MagicCards.Web.Components" />
-		<Using Include="Howest.MagicCards.MinimalAPI.Models"/>
-		<Using Include="Howest.MagicCards.MinimalAPI.Models.Card" Alias="Card"/>
-		<Using Include="Howest.MagicCards.DAL.Models"/>
-		<Using Include="Microsoft.EntityFrameworkCore"/>
-		<Using Include="System.Text"/>
-		<Using Include="System.Text.Json"/>
-		<Using Include="Howest.MagicCards.WebAPI.Wrappers"/>
+		<Using Include="Howest.MagicCards.MinimalAPI.Models" />
+		<Using Include="Howest.MagicCards.MinimalAPI.Models.Card" Alias="Card" />
+		<Using Include="Howest.MagicCards.DAL.Models" />
+		<Using Include="Microsoft.EntityFrameworkCore" />
+		<Using Include="System.Text" />
+		<Using Include="System.Text.Json" />
+		<Using Include="Howest.MagicCards.WebAPI.Wrappers" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="wwwroot\images\" />
 	</ItemGroup>
 </Project>
