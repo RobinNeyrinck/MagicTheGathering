@@ -11,6 +11,10 @@ public class CardProfile : Profile
 			.ForMember(dto => dto.Description,
 				opt => opt.MapFrom(card => card.Text)
 			)
+			.ForMember(
+			dto => dto.ImageUrl,
+				opt => opt.MapFrom(card => card.OriginalImageUrl)
+			)
 			.ForMember(dto => dto.Set,
 				opt => opt.MapFrom(card => card.SetCodeNavigation.Name)
 			)
@@ -27,6 +31,9 @@ public class CardProfile : Profile
 			)
 			.ForMember(dto => dto.Set,
 				opt => opt.MapFrom(card => card.SetCodeNavigation.Name)
+			)
+			.ForMember(dto => dto.ImageUrl,
+				opt => opt.MapFrom(card => card.OriginalImageUrl)
 			)
 			.ForMember(dto => dto.Colors,
 				opt => opt.MapFrom(card => card.CardColors.Select(cc => cc.Color.Name))
