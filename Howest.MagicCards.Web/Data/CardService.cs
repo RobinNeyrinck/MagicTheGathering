@@ -108,7 +108,7 @@ public class CardService : ICardService
 	#region Data Manipulation
 	public async Task<IEnumerable<CardDTO>> Filter(CardFilterArgs filter)
 	{
-		var queryParams = new Dictionary<string, string>
+		Dictionary<string, string> queryParams = new Dictionary<string, string>
 		{
 			["Name"] = filter.Name,
 			["Text"] = filter.Text,

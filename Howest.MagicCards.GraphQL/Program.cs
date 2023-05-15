@@ -1,4 +1,4 @@
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 ConfigurationManager config = builder.Configuration;
 
 builder.Services.AddDbContext<mtg_v1Context>(options =>
@@ -14,7 +14,7 @@ builder.Services.AddGraphQL()
                 .AddDataLoader()
                 .AddSystemTextJson();
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 app.UseGraphQL<RootSchema>();
 app.UseGraphQLPlayground(options: new GraphQLPlaygroundOptions()
