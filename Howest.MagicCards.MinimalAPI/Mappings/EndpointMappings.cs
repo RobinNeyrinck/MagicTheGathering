@@ -1,4 +1,6 @@
-﻿namespace Howest.MagicCards.MinimalAPI.Mappings;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Howest.MagicCards.MinimalAPI.Mappings;
 
 public static class EndpointMappings
 {
@@ -16,29 +18,39 @@ public static class EndpointMappings
         })
             .WithTags("CardDeck");
 
-        app.MapPost($"{urlPrefix}/cards", (ICardDeckService service, Card card) =>
+        app.MapPost($"{urlPrefix}/cards", async (ICardDeckService service, MongoCardDTO card, CardCustomValidator validator) =>
         {
-            if (card is not null)
+			if (card is not null)
             {
-                Card createdCard = service.AddCard(card);
+				Result.ValidationResult restult = await validator.ValidateAsync(card);
+				if (!restult.IsValid)
+				{
+					return Results.BadRequest(restult.Errors);
+				}
+				MongoCardDTO createdCard = service.AddCard(card);
                 return Results.Created($"{urlPrefix}/cards/{createdCard.Id}", createdCard);
             }
             return Results.BadRequest();
         })
             .WithTags("CardDeck")
-            .Accepts<Card>("application/json");
+            .Accepts<MongoCardDTO>("application/json");
 
-        app.MapPut($"{urlPrefix}/cards", (ICardDeckService service, Card card) =>
+        app.MapPut($"{urlPrefix}/cards", async (ICardDeckService service, MongoCardDTO card, CardCustomValidator validator) =>
         {
             if (card is not null)
             {
+                Result.ValidationResult restult = await validator.ValidateAsync(card);
+                if (!restult.IsValid)
+                {
+					return Results.BadRequest(restult.Errors);
+				}
                 service.UpdateCard(card.Id, card);
                 return Results.Ok();
             }
             return Results.BadRequest();
         })
             .WithTags("CardDeck")
-            .Accepts<Card>("application/json");
+            .Accepts<MongoCardDTO>("application/json");
 
         app.MapDelete($"{urlPrefix}/cards", (ICardDeckService service, string id) =>
         {

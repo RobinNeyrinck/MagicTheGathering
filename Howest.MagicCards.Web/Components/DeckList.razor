@@ -5,7 +5,7 @@
 	}
 	else
 	{
-		@foreach (MinimalAPI.Models.Card card in deck)
+		@foreach (MongoCardDTO card in deck)
 		{
 			<DeckCard card="card" OnNameClicked="removeCard" OnNumberClicked="addAnother"></DeckCard>
 		}
@@ -14,17 +14,17 @@
 
 @code {
 	[Parameter]
-	public IEnumerable<MinimalAPI.Models.Card>? deck { get; set; }
+	public IEnumerable<MongoCardDTO>? deck { get; set; }
 	[Parameter]
-	public EventCallback<MinimalAPI.Models.Card> OnNameClicked { get; set; }
+	public EventCallback<MongoCardDTO> OnNameClicked { get; set; }
 	[Parameter]
-	public EventCallback<MinimalAPI.Models.Card> OnNumberClicked { get; set; }
-	private async void removeCard(MinimalAPI.Models.Card card)
+	public EventCallback<MongoCardDTO> OnNumberClicked { get; set; }
+	private async void removeCard(MongoCardDTO card)
 	{
 		await OnNameClicked.InvokeAsync(card);
 	}
 
-	private async void addAnother(MinimalAPI.Models.Card card)
+	private async void addAnother(MongoCardDTO card)
 	{
 		await OnNumberClicked.InvokeAsync(card);
 	}

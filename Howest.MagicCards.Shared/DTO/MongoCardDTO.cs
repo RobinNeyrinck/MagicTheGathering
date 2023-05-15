@@ -1,6 +1,6 @@
-﻿namespace Howest.MagicCards.MinimalAPI.Models;
+﻿namespace Howest.MagicCards.Shared.DTO;
 
-public class Card
+public class MongoCardDTO
 {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]

@@ -6,7 +6,7 @@ partial class DeckBuilder
 	private IEnumerable<SetDTO>? _sets;
 	private IEnumerable<RarityDTO>? _rarities;
 	private IEnumerable<TypeDTO>? _types;
-	private IEnumerable<Card>? _deck;
+	private IEnumerable<MongoCardDTO>? _deck;
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -25,7 +25,7 @@ partial class DeckBuilder
 		StateHasChanged();
 	}
 
-	protected async Task RemoveCardAsync(MinimalAPI.Models.Card card)
+	protected async Task RemoveCardAsync(MongoCardDTO card)
 	{
 		bool result = await _deckRepository.RemoveCard(card);
 		if (result)
@@ -36,7 +36,7 @@ partial class DeckBuilder
 
 	protected async Task AddCardToDeckAsync(CardDTO card)
 	{
-		MinimalAPI.Models.Card deckCard = new()
+		MongoCardDTO deckCard = new()
 		{
 			Name = card.Name,
 			Amount = 1
@@ -49,9 +49,15 @@ partial class DeckBuilder
 		}
 	}
 
-	protected async Task AddAnotherCardToDeckAsync(Card card)
+	protected async Task AddAnotherCardToDeckAsync(MongoCardDTO card)
 	{
-		bool result = await _deckRepository.AddCard(card);
+		MongoCardDTO cardWriteDTO = new()
+		{
+			Name = card.Name,
+			Amount = card.Amount
+		};
+
+		bool result = await _deckRepository.AddCard(cardWriteDTO);
 		if (result)
 		{
 			await RefreshDeckAsync();

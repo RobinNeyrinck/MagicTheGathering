@@ -2,8 +2,8 @@
 
 public interface IDeckService
 {
-	Task<bool> AddCard(Card card);
-	Task<IEnumerable<Card>> GetDeckAsync();
-	Task<bool> RemoveCard(Card card);
+	Task<bool> AddCard(MongoCardDTO card);
+	Task<IEnumerable<MongoCardDTO>> GetDeckAsync();
+	Task<bool> RemoveCard(MongoCardDTO card);
 	Task<bool> ClearDeck();
 }

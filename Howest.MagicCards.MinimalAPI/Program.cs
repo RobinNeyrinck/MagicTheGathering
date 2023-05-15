@@ -19,6 +19,11 @@ builder.Services.AddSingleton<IMongoClient, MongoClient>(sp =>
 builder.Services.AddScoped<ICardDeckService, CardDeckService>();
 #endregion
 
+builder.Services.AddFluentValidation(v =>
+{
+	v.RegisterValidatorsFromAssemblyContaining<CardCustomValidator>();
+});
+
 // Add services to the container.
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

@@ -1,27 +1,29 @@
-﻿namespace Howest.MagicCards.MinimalAPI.Services;
+﻿using Howest.MagicCards.Shared.DTO;
+
+namespace Howest.MagicCards.MinimalAPI.Services;
 
 public class CardDeckService : ICardDeckService
 {
-    private readonly IMongoCollection<Card> _cardDeck;
+    private readonly IMongoCollection<MongoCardDTO> _cardDeck;
 
     public CardDeckService(ICardDeckDatabaseSettings settings, IMongoClient client)
     {
         IMongoDatabase database = client.GetDatabase(settings.DatabaseName);
-        _cardDeck = database.GetCollection<Card>(settings.CardDeckCollectionName);
+        _cardDeck = database.GetCollection<MongoCardDTO>(settings.CardDeckCollectionName);
     }
 
-    public Card AddCard(Card card)
+    public MongoCardDTO AddCard(MongoCardDTO card)
     {
         _cardDeck.InsertOne(card);
         return card;
     }
 
-	public Card GetCard(string name)
+	public MongoCardDTO GetCard(string name)
 	{
         return _cardDeck.Find(card => card.Name == name).FirstOrDefault();
 	}
 
-	public List<Card> GetCards()
+	public List<MongoCardDTO> GetCards()
     {
         return _cardDeck.Find(card => true).ToList();
     }
@@ -31,7 +33,7 @@ public class CardDeckService : ICardDeckService
         _cardDeck.DeleteOne(card => card.Id == id);
     }
 
-    public void UpdateCard(string id, Card card)
+    public void UpdateCard(string id, MongoCardDTO card)
     {
         _cardDeck.ReplaceOne(card => card.Id == id, card);
     }

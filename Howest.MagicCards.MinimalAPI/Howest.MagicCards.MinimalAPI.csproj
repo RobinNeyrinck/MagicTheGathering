@@ -8,6 +8,8 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="11.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="FluentValidation" Version="11.5.2" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.15" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.15" />
@@ -22,14 +24,23 @@
   </ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\Howest.MagicCards.Shared\Howest.MagicCards.Shared.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<Using Include="Howest.MagicCards.MinimalAPI.Models" />
-		<Using Include="Howest.MagicCards.MinimalAPI.Services"/>
-		<Using Include="Howest.MagicCards.MinimalAPI.Mappings"/>
+		<Using Include="Howest.MagicCards.MinimalAPI.Services" />
+		<Using Include="Howest.MagicCards.MinimalAPI.Mappings" />
+		<Using Include="Howest.MagicCards.MinimalAPI.Validator" />
+		<Using Include="Howest.MagicCards.Shared.DTO"/>
 		<Using Include="MongoDB.Driver" />
 		<Using Include="MongoDB.Bson" />
-		<Using Include="MongoDB.Bson.Serialization.Attributes"/>
-		<Using Include="Microsoft.Extensions.Options"/>
-		<Using Include="Microsoft.AspNetCore.Mvc"/>
+		<Using Include="MongoDB.Bson.Serialization.Attributes" />
+		<Using Include="Microsoft.Extensions.Options" />
+		<Using Include="Microsoft.AspNetCore.Mvc" />
+		<Using Include="FluentValidation.AspNetCore" />
+		<Using Include="FluentValidation" />
+		<Using Include="FluentValidation.Results" Alias="Result"/>
 	</ItemGroup>
 
 </Project>
